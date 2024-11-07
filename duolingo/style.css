@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.cabecalho {
+  background-color: #235390;
+  padding: 1rem;
+  height: 100vh;
+}
+.select-language {
+  background-color: transparent;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 17.25px;
+  letter-spacing: 0.800000011920929px;
+}
+.top-header {
+  height: 5vh;
+}
+.main-header {
+  height: 85vh;
+  background-image: url(assets/background-header.svg);
+}
+.footer-header{
+    align-items: center;
+}
+.button-started {
+  background-color: #58cc02;
+}
+.button-have-account {
+  background-color: transparent;
+  border: solid #042c60;
+}
+
+.list-header {
+  list-style-type: none;
+}
+.first-p {
+  font-family: Inter;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 40px;
+  text-align: center;
+}
+.first-main{
+  height: 225px;
+}
+.principal-main{
+  height: 475.38px;
+}
+.duo-pro{
+  height: 260px;
+}
+.linksd{
+  text-decoration: none;
+  color: #1CB0F6;
+}
+.download{
+  text-decoration: none;
+  color: #4B4B4B;
+}
+.links{
+  height: 295px;
+}
+.schools{
+  height: 242px;
+}
+.rodape{
+  height: 903px;
+  background-image: url(assets/background-header.svg);
+  background-color: #042c60;
+}
+.button-started-footer{
+  background-color: #58cc02;
+}
+.links-footer li a{
+  text-decoration: none;
+}
+.links-footer li{
+  list-style-type: none;
+  margin-bottom: 9.5px;
+}
+.links-footer li a{
+  color: rgb(255, 255, 255, 0.5);
+}
+.links-footer li:first-child a{
+  color: rgb(255, 255, 255, 1);
+}
+.site-language-footer ul{
+  list-style-type: none;
+}
