@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.logo{
+    width: 50px;
+}
+.menu-burger{
+    width: 50px;
+    display: none;
+}
+.header{
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url(assets/img-fundo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.start-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.nav-header a{
+    text-decoration: none;
+    color: #FFF;
+}
+
+.nav-header{
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.produtos{
+    width: 100%;
+    gap: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.card-produto{
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 20%;
+}
+.card-produto img{
+    width: 100%;
+    height: 60%;
+}
+.card-info{
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+.footer{
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    color: #000;
+}
+
+.redes{
+    width: 30%;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    color: #000;
+}
+.redes a img{
+    width: 20px;
+}
+.p-footer{
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-burger{
+        display: block;
+    }
+    .nav-header a{
+        display: none;
+    }
+    .nav-header{
+        width: 20%;
+        display: flex;
+        justify-content: center;
+    }
+    .start-header{
+        width: 20%;
+        display: flex;
+        justify-content: center;
+    }
+    .header{
+        justify-content: space-around;
+    }
+    .produtos{
+        flex-direction: column;
+    }
+    .card-produto{
+        width: 70%;
+    }
+}
