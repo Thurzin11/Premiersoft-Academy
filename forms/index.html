@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Forms</title>
+</head>
+<body>
+    <form action="/" method="post">
+        <div class="name">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+        </div>
+        <div class="email">
+            <label for="email">Email</label>
+            <input type="text" id="name">
+        </div>
+        <div class="password">
+            <label for="password">Password</label>
+            <div class="container-with-eye">
+                <input class="input-password" type="password" id="password">
+                <img src="assets/eye.png" alt="eye" id="eye-open">
+                <img src="assets/eye closed.png" alt="eye" class="eye-closed" id="eye-closed">
+            </div>
+        </div>
+        <div class="enviar">
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+    <script src="script.js"></script>
+</body>
+</html>
