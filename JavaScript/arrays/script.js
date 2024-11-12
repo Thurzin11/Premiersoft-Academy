@@ -11,7 +11,7 @@ const produtosDisponiveis = produtosLoja.filter((produto) =>
 
 console.log(produtosDisponiveis);
 
-Palindromo
+// Palindromo
 const nome  = "Reinier";
 
 let nomeInvertido = nome.split("").reverse().join("").toUpperCase();
