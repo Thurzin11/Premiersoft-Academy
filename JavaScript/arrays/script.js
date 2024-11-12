@@ -31,11 +31,28 @@
 // console.log(totalVendas);
 
 
-// Fazendo uma cópia superficial de um array
-const frutas = ['maçã', 'banana', 'laranja'];
-const frutasCopia = [...frutas];
+// // Fazendo uma cópia superficial de um array
+// const frutas = ['maçã', 'banana', 'laranja'];
+// const frutasCopia = [...frutas];
 
-// A cópia é independente do original
-frutas.push('manga');
-console.log(frutas);       // ['maçã', 'banana', 'laranja', 'manga']
-console.log(frutasCopia);  // ['maçã', 'banana', 'laranja']
+// // A cópia é independente do original
+// frutas.push('manga');
+// console.log(frutas);       // ['maçã', 'banana', 'laranja', 'manga']
+// console.log(frutasCopia);  // ['maçã', 'banana', 'laranja']
+
+// Usando spread para passar múltiplos argumentos
+const numeros = [1, 5, 2, 8, 3];
+
+// Sem spread operator
+console.log(Math.max(1, 5, 2, 8, 3));
+
+// Com spread operator
+console.log(Math.max(...numeros));
+
+// Exemplo prático: Função de registro de vendas
+function registrarVenda(data, vendedor, ...produtos) {
+    console.log(`Venda realizada em ${data} por ${vendedor}`);
+    produtos.forEach(produto => console.log(`- ${produto}`));
+}
+
+registrarVenda('2024-03-15', 'João', 'Notebook', 'Mouse', 'Teclado');
