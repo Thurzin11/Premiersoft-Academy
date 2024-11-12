@@ -20,21 +20,31 @@
 
 
 
-function criarContadorVisitas() {
-    let visitas = 0;
+// function criarContadorVisitas() {
+//     let visitas = 0;
     
-    return {
-        registrarVisita: function() {
-            visitas++;
-            return visitas;
-        },
-        obterTotalVisitas: function() {
-            return visitas;
-        }
-    };
-}
+//     return {
+//         registrarVisita: function() {
+//             visitas++;
+//             return visitas;
+//         },
+//         obterTotalVisitas: function() {
+//             return visitas;
+//         }
+//     };
+// }
 
-const contadorBlog = criarContadorVisitas();
-console.log(contadorBlog.registrarVisita()); // 1
-console.log(contadorBlog.registrarVisita()); // 2
-console.log(contadorBlog.obterTotalVisitas()); // 2
+// const contadorBlog = criarContadorVisitas();
+// console.log(contadorBlog.registrarVisita()); // 1
+// console.log(contadorBlog.registrarVisita()); // 2
+// console.log(contadorBlog.obterTotalVisitas()); // 2
+
+const usuario = {
+    nome: 'João',
+    idade: 25,
+    apresentar() {
+        console.log(`Olá, eu sou ${this.nome} e tenho ${this.idade} anos`);
+    }
+};
+
+usuario.apresentar();
