@@ -1,18 +1,33 @@
 let display = document.getElementById("display");
 let buttonReset = document.getElementById("reset");
 const btns = document.querySelectorAll(".btns");
+const btnsPai = document.querySelector(".btn-pai");
 
-btns.forEach((btn) => {
-  btn.addEventListener("click", () => {
+btnsPai.addEventListener("click", (event) => {
+  const btn = event.target;
+
+  if (btn.tagName == "BUTTON") {
     if (btn.value != "=") {
-      display.value += btn.value;
-      return;
-    }
-    let calculo = display.value.split(/([/*+-])/);
-    let resultado = fazerCalculo(calculo[0], calculo[1], calculo[2]);
-    display.value = resultado;
-  });
+            display.value += btn.value;
+            return;
+          }
+          let calculo = display.value.split(/([/*+-])/);
+          let resultado = fazerCalculo(parseFloat(calculo[0]), calculo[1], parseFloat(calculo[2]));
+          display.value = resultado;
+  }
 });
+
+// btns.forEach((btn) => {
+//   btn.addEventListener("click", () => {
+//     if (btn.value != "=") {
+//       display.value += btn.value;
+//       return;
+//     }
+//     let calculo = display.value.split(/([/*+-])/);
+//     let resultado = fazerCalculo(calculo[0], calculo[1], calculo[2]);
+//     display.value = resultado;
+//   });
+// });
 
 let conta;
 
