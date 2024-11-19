@@ -14,7 +14,6 @@ function calcularConta(valorConsumido, numeroPessoas, qualidadeServico) {
     quantidadePessoas: numeroPessoas.toFixed(2),
   };
 }
-
 function calcularGorjeta(valorConsumido, qualidadeServico) {
   switch (qualidadeServico) {
     case "excelente":

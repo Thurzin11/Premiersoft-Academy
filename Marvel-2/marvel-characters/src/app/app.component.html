@@ -1,0 +1,15 @@
+<div class="container border border-2 border rounded-3 shadow">
+  <div class="row p-3 justify-content-around align-items-center">
+    <input class="col-6 rounded-3 border-1 border-black" #name type="text" placeholder="Insira o nome de um personagem">
+    <button class="col-3 border-0 rounded-3 buttonSearch text-light" (click)="getCharacter(name.value)">Search</button>
+  </div>
+  <div class="row justify-content-around mb-1">
+    <h2 class="col-6 text-center">{{nome}}</h2>
+  </div>
+  <div class="row justify-content-center mb-2">
+    <img class="col-6 col-md-4 col-lg-5 col-xl-3 rounded-2 p-0 "  src="{{this.thumbnail}}" alt="img-personagem">
+  </div>
+  <div class="row">
+    <p class="col-12 text-center d-flex justify-content-center">{{descricao}}</p>
+  </div>
+</div>
