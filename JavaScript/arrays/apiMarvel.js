@@ -14,7 +14,7 @@ async function fetchMarvelCharacters() {
     const ts = new Date().getTime();
     const hash = await createHash(ts, privateKey, publicKey);
 
-    const url = `https://gateway.marvel.com/v1/public/characters?ts=${ts}&apikey=${publicKey}&hash=${hash}`;
+    const url = `https://gateway.marvel.com/v1/public/characters?name=Captain America&ts=${ts}&apikey=${publicKey}&hash=${hash}`;
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Erro: ${response.statusText}`);
 

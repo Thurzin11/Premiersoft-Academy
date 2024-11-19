@@ -8,15 +8,18 @@ const alturaPokemon = document.querySelector("#altura");
 
 btnBuscar.addEventListener("click", async () => {
   const pokemon = await getPokemon(nomePokemon.value);
-  console.log(pokemon);
+  // console.log(pokemon);
   habilidade1.textContent = pokemon.types[0].type.name.toUpperCase();
-  habilidade2.textContent = pokemon.types[1].type.name.toUpperCase();
+  // habilidade2.textContent = pokemon.types[1].type.name.toUpperCase();
+  console.log(
+    pokemon.sprites.other["official-artwork"].front_default ||
+      pokemon.sprites.front_default
+  );
   imgPokemon.src =
     pokemon.sprites.other["official-artwork"].front_default ||
     pokemon.sprites.front_default;
   pokemonName.textContent = pokemon.name;
-  
-  alturaPokemon.textContent = `${pokemon.height/10}m`;
+  alturaPokemon.textContent = `${pokemon.height / 10}m`;
 });
 
 async function getPokemon(pokemon) {

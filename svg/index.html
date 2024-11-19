@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 400" width="1000" height="4000">
+    <!-- Corpo do foguete -->
+    <path d="M32 2C28 6 20 15 20 28C20 37 26 44 32 50C38 44 44 37 44 28C44 15 36 6 32 2Z" fill="#FF5733" />
+    
+    <!-- Janela -->
+    <circle cx="32" cy="22" r="4" fill="#FFF" />
+    
+    <!-- Asa esquerda -->
+    <path d="M20 34L14 50L20 50Z" fill="#C70039" />
+    
+    <!-- Asa direita -->
+    <path d="M44 34L50 50L44 50Z" fill="#C70039" />
+    
+    <!-- Rastro do foguete -->
+    <g>
+      <!-- Fumaça superior -->
+      <ellipse cx="32" cy="58" rx="6" ry="12" fill="#FFD700">
+        <animate attributeName="cy" from="58" to="100" dur="1s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="1" to="0" dur="1s" repeatCount="indefinite" />
+      </ellipse>
+      <!-- Fumaça inferior -->
+      <ellipse cx="32" cy="64" rx="10" ry="20" fill="#FF4500">
+        <animate attributeName="cy" from="64" to="110" dur="1.5s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="1" to="0" dur="1.5s" repeatCount="indefinite" />
+      </ellipse>
+      <!-- Fumaça lateral esquerda -->
+      <ellipse cx="26" cy="62" rx="4" ry="8" fill="#FF6347">
+        <animate attributeName="cy" from="62" to="110" dur="1s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="1" to="0" dur="1s" repeatCount="indefinite" />
+      </ellipse>
+      <!-- Fumaça lateral direita -->
+      <ellipse cx="38" cy="62" rx="4" ry="8" fill="#FF6347">
+        <animate attributeName="cy" from="62" to="110" dur="1.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="1" to="0" dur="1.2s" repeatCount="indefinite" />
+      </ellipse>
+    </g>
+  
+    <!-- Chamas -->
+    <path d="M28 62C28 68 31 72 32 72C33 72 36 68 36 62L32 62L28 62Z" fill="#FFC300">
+      <animateTransform attributeName="transform"
+                        attributeType="XML"
+                        type="scale"
+                        from="1 1"
+                        to="1.2 1.2"
+                        dur="0.3s"
+                        repeatCount="indefinite" />
+    </path>
+  
+    <!-- Animação do foguete subindo -->
+    <animateTransform attributeName="transform"
+                      attributeType="XML"
+                      type="translate"
+                      from="0 30"
+                      to="0 -300"
+                      dur="3s"
+                      repeatCount="indefinite" />
+  </svg>
+  
