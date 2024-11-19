@@ -1,0 +1,24 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.first-button{
+    background-color: green;
+    color: #FFF;
+}
+.second-button{
+    background-color: purple;
+    color: #FFF;
+}
+
+.principal{
+    height: 115vh;
+}
+.search{
+    background-color: red;
+    color: #FFF;
+}
+.main{
+    height: 500px;
+}
