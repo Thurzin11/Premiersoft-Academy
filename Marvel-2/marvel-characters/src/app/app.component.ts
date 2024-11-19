@@ -21,7 +21,6 @@ export class AppComponent {
       this.nome = name;
       this.descricao = description;
       this.thumbnail = thumbnail.path + '.' + thumbnail.extension;
-      
     });
   }
 }

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Movies </title>
+  </head>
+  <body class="container">
+    <header class="row border justify-content-center">
+      <h1 class="col-5 text-center">JSON API</h1>
+    </header>
+    <main class="row justify-content-center border">
+      <div class="col-8 d-flex flex-column align-items-center justify-content-center border mb-3">
+        <select class="border" name="select-search" id="select-search">
+          <option value="comments">Comments</option>
+          <option value="photos">Photos</option>
+          <option value="albums">Albums</option>
+          <option value="todos">Todos</option>
+          <option value="posts">Posts</option>
+        </select>
+      </div>
+      <div class="col-6 border text-center">
+        <h3 class="border">Titulo</h3>
+        <img src="" alt="img-album">
+      </div>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
