@@ -47,9 +47,13 @@
                   />
                 </div>
                 <div class="mb-3">
-                    <select class="form-control" name="categoria" id="categoriaLivro">
-                        <option value="">Selecione a categoria do livro</option>
-                    </select>
+                  <select
+                    class="form-control"
+                    name="categoria"
+                    id="categoriaLivro"
+                  >
+                    <option value="">Selecione a categoria do livro</option>
+                  </select>
                 </div>
                 <button type="submit" class="btn btn-primary">
                   Adicionar Livro
@@ -101,10 +105,11 @@
 
     <script>
       class Livro {
-        constructor(titulo, autor, paginas) {
+        constructor(titulo, autor, paginas, categoria) {
           this.titulo = titulo;
           this.autor = autor;
           this.paginas = paginas;
+          this.categoria = categoria;
           this.emprestado = false;
         }
 
@@ -190,12 +195,26 @@
 
           UI.limparCamposCategoria();
           UI.exibirCategoria();
+          UI.atualizaCategorias();
         }
         static removerCategoria(index) {
           const categorias = GerenciadorCategorias.listarCategorias();
           GerenciadorCategorias.categorias.splice(index, 1);
 
           UI.exibirCategoria();
+        }
+
+        static atualizaCategorias() {
+          const selectCategorias = document.getElementById("categoriaLivro");
+
+          GerenciadorCategorias.listarCategorias().forEach(
+            (categoria, index) => {
+              const option = document.createElement("option");
+              option.value = categoria.nome;
+              option.innerHTML = categoria.nome;
+              selectCategorias.appendChild(option);
+            }
+          );
         }
 
         static exibirLivros() {
