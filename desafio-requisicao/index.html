@@ -20,11 +20,23 @@
         object-fit: cover;
       }
       .pop-up {
-        width: 300px;
+        width: 325px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+      }
+      .pop-up span {
+        top: 0;
+        left: 95%;
+        color: red;
+        cursor: pointer;
+      }
+      .dropdown-menu li:nth-child(odd) {
+        background-color: #272e33;
+      }
+      .dropdown-menu li {
+        cursor: pointer;
       }
     </style>
   </head>
@@ -50,10 +62,8 @@
           >
             Regions
           </button>
-          <ul class="dropdown-menu text-center">
-            <li class="pe-auto" onclick="searchCountriesByRegion('Africa')">
-              Africa
-            </li>
+          <ul class="dropdown-menu text-center p-0">
+            <li onclick="searchCountriesByRegion('Africa')">Africa</li>
             <li onclick="searchCountriesByRegion('Americas')">Americas</li>
             <li onclick="searchCountriesByRegion('Asia')">Asia</li>
             <li onclick="searchCountriesByRegion('Europe')">Europe</li>
@@ -79,6 +89,18 @@
 
       <div id="countriesContainer" class="row g-4"></div>
 
+      <div id="modal" class="d-none">
+        <div
+          class="pop-up position-absolute bg-black border border-white rounded-2 p-3 z-2"
+        >
+          <h3 class="text-center" id="country-name">country name</h3>
+          <span class="position-absolute close-modal">X</span>
+          <p id="country-coin">Moeda:</p>
+          <p>Paises Vizinhos</p>
+          <ul id="countries-borders"></ul>
+        </div>
+      </div>
+
       <div id="loading" class="text-center d-none">
         <div class="spinner-border text-primary" role="status">
           <span class="visually-hidden">Carregando...</span>
@@ -89,10 +111,16 @@
     <script>
       const searchInput = document.getElementById("searchInput");
       const countriesContainer = document.getElementById("countriesContainer");
+      const countryNameModal = document.getElementById("country-name");
+      const countryCoinModal = document.getElementById("country-coin");
+      const countriesBordersHTML = document.getElementById("countries-borders");
+      const modal = document.getElementById("modal");
       const loading = document.getElementById("loading");
       const themeButton = document.getElementById("flexSwitchCheckChecked");
       const bodyHtml = document.querySelector(".body");
+      const closeModal = document.querySelector(".close-modal");
       const cardBody = document.querySelectorAll(".card-body");
+      const cards = document.querySelectorAll(".country-card");
       const pagina = document.documentElement;
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -122,8 +150,8 @@
           }
 
           const data = await response.json();
-          console.log(data);
-          
+          // console.log(data);
+
           return data;
         } catch (error) {
           console.error("Erro:", error);
@@ -158,7 +186,7 @@
       function createCountryCard(country) {
         return `
                <div class="col-md-4">
-                   <div class="card country-card h-100">
+                   <div class="card country-card h-100"  onclick="onModalCard('${country.name.common}')">
                        <img src="${country.flags.png}" class="card-img-top flag-img" alt="Bandeira ${country.name.common}">
                        <div class="card-body">
                            <h5 class="card-title">${country.name.common}</h5>
@@ -173,18 +201,52 @@
            `;
       }
 
-      function createModal(country) {
-        return `<div
-        class="pop-up position-absolute bg-black border border-white rounded-2 p-3 z-2"
-      >
-        <h3 class="text-center">Germany</h3>
-        <p>Moeda:</p>
-        <ul>
-          Paises Vizinhos
-          <li>Germany</li>
-        </ul>
-      </div>`;
+      async function getNamesCountries(countries) {
+        try {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/alpha?codes=${countries}`
+          );
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
       }
+
+      async function onModalCard(country) {
+        try {
+          const response = await fetch(
+            `https://restcountries.com/v3.1/name/${country}?fullText=true`
+          );
+          const data = await response.json();
+          console.log(data);
+          countryNameModal.innerHTML = data[0].name.common;
+          const firstCurrencie = Object.keys(data[0].currencies)[0];
+          const coin = data[0].currencies[firstCurrencie];
+          countryCoinModal.innerHTML = `Moeda: ${coin.name}, Símbolo: ${coin.symbol}`;
+          const countriesBordersResponse = data[0].borders;
+          const countriesBorderFullName = await getNamesCountries(
+            countriesBordersResponse
+          );
+          countriesBorderFullName.forEach((countryBorder) => {
+            const li = document.createElement("li");
+            li.textContent = countryBorder.name.common;
+            li.style = "list-style-type: numeric";
+            li.id = "paises-vizinhos";
+            countriesBordersHTML.appendChild(li);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+        modal.classList.remove("d-none");
+      }
+
+      closeModal.addEventListener("click", () => {
+        modal.classList.add("d-none");
+        while (countriesBordersHTML.firstChild) {
+          countriesBordersHTML.removeChild(countriesBordersHTML.firstChild);
+        }
+      });
 
       let debounceTimeout;
       searchInput.addEventListener("input", (e) => {

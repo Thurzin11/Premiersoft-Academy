@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animation Frame</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        /* height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center; */
+      }
+      .quadrado {
+        background-color: aqua;
+        height: 100px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="square" class="quadrado"></div>
+  </body>
+  <script>
+    let position = 0;
+    const speed = 2; // Pixels por frame
+    const square = document.getElementById("square"); // Elemento HTML
+
+    function animate() {
+      position += speed; // Atualiza a posição
+      square.style.transform = `translateX(${position}px)`; // Move o quadrado
+
+      if (position < window.innerWidth - square.offsetWidth) {
+        requestAnimationFrame(animate); // Chama novamente para continuar
+      }
+    }
+
+    animate(); // Inicia a animação
+  </script>
+</html>
