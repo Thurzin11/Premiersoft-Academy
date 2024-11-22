@@ -35,3 +35,37 @@ export async function searchMovies(query) {
     throw error;
   }
 }
+
+
+export async function getMovieByName(movieName) {
+  try {
+    const response = await axios.get(`${BASE_URL}/`, {
+      params: {
+        t: movieName,
+        apikey: API_KEY,
+      },
+    });
+
+    if (response.data.Response === "False") {
+      throw new Error(response.data.Error || "Filme não encontrado");
+    }
+
+    const movie = {
+      id: response.data.imdbID,
+      title: response.data.Title,
+      year: response.data.Year,
+      poster:
+        response.data.Poster !== "N/A"
+          ? response.data.Poster
+          : "https://via.placeholder.com/300x450?text=Sem+Poster",
+      director: response.data.Director,
+      genre: response.data.Genre,
+      plot: response.data.Plot,
+    };
+
+    return movie;
+  } catch (error) { 
+    console.error("Error fetching movie:", error);
+    throw error;
+  }
+}

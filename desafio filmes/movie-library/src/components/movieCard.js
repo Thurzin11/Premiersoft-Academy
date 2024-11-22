@@ -1,5 +1,5 @@
 export function renderMovies(movies) {
-    const moviesList = document.getElementById('moviesList');
+    const modal = document.getElementById('moviesList');
     moviesList.innerHTML = ''; // Limpa a lista atual
   
     // TODO: Para cada filme, criar um card usando Bootstrap
@@ -14,7 +14,7 @@ export function renderMovies(movies) {
     // TODO: Criar e retornar o HTML do card do filme
     // Dica: Use as classes do Bootstrap para criar um card bonito
     return `
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4 movie-card" onclick="openModal('${movie.title}')">
         <div class="card">
           <img src="${movie.poster}" class="card-img-top" alt="${movie.title}">
           <div class="card-body">
