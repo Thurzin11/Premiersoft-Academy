@@ -1,150 +1,191 @@
 <!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblioteca POO</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Biblioteca POO</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
-</head>
+  <body class="bg-light">
+    <div class="container py-5">
+      <h1 class="text-center mb-4">Gerenciador de Biblioteca</h1>
 
-<body class="bg-light">
-  <div class="container py-5">
-    <h1 class="text-center mb-4">Gerenciador de Biblioteca</h1>
+      <div class="row">
+        <div class="col-md-6 mb-5">
+          <div class="card mb-6">
+            <div class="card-header">Adicionar Livro</div>
+            <div class="card-body">
+              <form id="livroForm">
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="titulo"
+                    placeholder="Título"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="autor"
+                    placeholder="Autor"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="paginas"
+                    placeholder="Número de Páginas"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <select
+                    class="form-control"
+                    name="categoria"
+                    id="categoriaLivro"
+                  >
+                    <!-- <option value="">Selecione a categoria do livro</option> -->
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Adicionar Livro
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card mb-4">
+            <div class="card-header">Adicionar Categoria</div>
+            <div class="card-body">
+              <form id="categoriaForm">
+                <div class="mb-3">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="categoria"
+                    placeholder="Nome Categoria"
+                    required
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Adicionar Categoria
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
 
-    <div class="row">
-      <div class="col-md-6 mb-5">
-        <div class="card mb-6">
-          <div class="card-header">Adicionar Livro</div>
-          <div class="card-body">
-            <form id="livroForm">
-              <div class="mb-3">
-                <input type="text" class="form-control" id="titulo" placeholder="Título" required />
-              </div>
-              <div class="mb-3">
-                <input type="text" class="form-control" id="autor" placeholder="Autor" required />
-              </div>
-              <div class="mb-3">
-                <input type="number" class="form-control" id="paginas" placeholder="Número de Páginas" required />
-              </div>
-              <div class="mb-3">
-                <select class="form-control" name="categoria" id="categoriaLivro">
-                  <!-- <option value="">Selecione a categoria do livro</option> -->
+        <div class="col-md-6">
+          <div class="card">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <p class="m-0 col-md-4">Lista de Livros</p>
+              <div class="col-md-8 d-flex justify-content-between">
+                <input
+                  type="text"
+                  class="col-md-8 rounded-2 border-1 px-4 h-25"
+                  id="inputFiltro"
+                  placeholder="Insira um nome para filtrar"
+                />
+                <select class="col-md-3" name="categoriaFiltro" id="categoriaFiltro" onchange="UI.filtraCategoria()">
+                  <!-- <option value="">Aventura</option> -->
                 </select>
               </div>
-              <button type="submit" class="btn btn-primary">
-                Adicionar Livro
-              </button>
-            </form>
+            </div>
+            <div class="card-body">
+              <ul id="listaLivros" class="list-group"></ul>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-header">Adicionar Categoria</div>
-          <div class="card-body">
-            <form id="categoriaForm">
-              <div class="mb-3">
-                <input type="text" class="form-control" id="categoria" placeholder="Nome Categoria" required />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Adicionar Categoria
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header d-flex justify-content-between align-items-center">
-            <p class="m-0">Lista de Livros</p>
-            <input type="text" class="rounded-2 border-1 px-4 h-25" id="inputFiltro"
-              placeholder="Insira um nome para filtrar">
-          </div>
-          <div class="card-body">
-            <ul id="listaLivros" class="list-group"></ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header">Lista de Categoria</div>
-          <div class="card-body">
-            <ul id="listaCategoria" class="list-group"></ul>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">Lista de Categoria</div>
+            <div class="card-body">
+              <ul id="listaCategoria" class="list-group"></ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script>
-    class Livro {
-      constructor(titulo, autor, paginas, categoria) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.paginas = paginas;
-        this.categoria = categoria;
-        this.emprestado = false;
-      }
-
-      emprestar() {
-        if (!this.emprestado) {
-          this.emprestado = true;
-          return true;
-        }
-        return false;
-      }
-
-      devolver() {
-        if (this.emprestado) {
+    <script>
+      class Livro {
+        constructor(titulo, autor, paginas, categoria) {
+          this.titulo = titulo;
+          this.autor = autor;
+          this.paginas = paginas;
+          this.categoria = categoria;
           this.emprestado = false;
-          return true;
         }
-        return false;
-      }
-    }
 
-    class Biblioteca {
-      static livros = [];
+        emprestar() {
+          if (!this.emprestado) {
+            this.emprestado = true;
+            return true;
+          }
+          return false;
+        }
 
-      static adicionarLivro(livro) {
-        this.livros.push(livro);
-      }
-
-      static listarLivros() {
-        return this.livros;
-      }
-    }
-    class Categoria {
-      constructor(nome) {
-        this.nome = nome;
-      }
-    }
-
-    class GerenciadorCategorias {
-      static categorias = [];
-
-      static adicionarCategoria(categoria) {
-        this.categorias.push(categoria);
+        devolver() {
+          if (this.emprestado) {
+            this.emprestado = false;
+            return true;
+          }
+          return false;
+        }
       }
 
-      static listarCategorias() {
-        return this.categorias;
+      class Biblioteca {
+        static livros = [];
+
+        static adicionarLivro(livro) {
+          this.livros.push(livro);
+        }
+
+        static listarLivros() {
+          return this.livros;
+        }
       }
-    }
+      class Categoria {
+        constructor(nome) {
+          this.nome = nome;
+        }
+      }
 
-    class UI {
-      static exibirCategoria() {
-        const listaCategoria = document.getElementById("listaCategoria");
-        listaCategoria.innerHTML = "";
+      class GerenciadorCategorias {
+        static categorias = [];
 
-        GerenciadorCategorias.listarCategorias().forEach(
-          (categoria, index) => {
-            const li = document.createElement("li");
-            li.className =
-              "list-group-item d-flex justify-content-between align-items-center";
-            li.innerHTML = `
+        static adicionarCategoria(categoria) {
+          this.categorias.push(categoria);
+        }
+
+        static listarCategorias() {
+          return this.categorias;
+        }
+      }
+
+      class UI {
+        static exibirCategoria() {
+          const listaCategoria = document.getElementById("listaCategoria");
+          listaCategoria.innerHTML = "";
+
+          GerenciadorCategorias.listarCategorias().forEach(
+            (categoria, index) => {
+              const li = document.createElement("li");
+              li.className =
+                "list-group-item d-flex justify-content-between align-items-center";
+              li.innerHTML = `
                         <div>
                             <h5 class="mb-1">${categoria.nome}</h5>
                         </div>
@@ -153,57 +194,81 @@
                                 Remover
                         </button>
                     `;
-            listaCategoria.appendChild(li);
-          }
-        );
-      }
-
-      static adicionarCategoria(e) {
-        e.preventDefault();
-
-        const nome = document.getElementById("categoria").value;
-
-        const categoria = new Categoria(nome);
-        GerenciadorCategorias.adicionarCategoria(categoria);
-
-        UI.limparCamposCategoria();
-        UI.exibirCategoria();
-        UI.atualizaCategorias(categoria);
-      }
-      static removerCategoria(index) {
-        const categorias = GerenciadorCategorias.listarCategorias();
-        GerenciadorCategorias.categorias.splice(index, 1);
-
-        UI.exibirCategoria();
-      }
-
-      static atualizaCategorias(categoria) {
-        const selectCategorias = document.getElementById("categoriaLivro");
-        
-        while (selectCategorias.firstChild) {
-          selectCategorias.removeChild(selectCategorias.firstChild);
+              listaCategoria.appendChild(li);
+            }
+          );
         }
 
-        GerenciadorCategorias.listarCategorias().forEach(
-          (categoria, index) => {
-            const option = document.createElement("option");
-            option.value = index;
-            option.innerHTML = categoria.nome;
-            option.className = "categoriaId";
-            selectCategorias.appendChild(option);
+        static adicionarCategoria(e) {
+          e.preventDefault();
+
+          const nome = document.getElementById("categoria").value;
+
+          const categoria = new Categoria(nome);
+          GerenciadorCategorias.adicionarCategoria(categoria);
+
+          UI.limparCamposCategoria();
+          UI.exibirCategoria();
+          UI.atualizaCategorias(categoria);
+        }
+        static removerCategoria(index) {
+          const categorias = GerenciadorCategorias.listarCategorias();
+          GerenciadorCategorias.categorias.splice(index, 1);
+
+          UI.exibirCategoria();
+        }
+
+        static atualizaCategorias(categoria) {
+          const selectCategorias = document.getElementById("categoriaLivro");
+          const selectCategoriasFiltro = document.getElementById("categoriaFiltro");
+          
+          while (selectCategorias.firstChild) {
+            selectCategorias.removeChild(selectCategorias.firstChild);
+            selectCategoriasFiltro.removeChild(selectCategoriasFiltro.firstChild);
           }
-        );
-      }
+          
+          GerenciadorCategorias.listarCategorias().forEach(
+            (categoria, index) => {
+              const option = document.createElement("option");
+              option.value = index;
+              option.innerHTML = categoria.nome;
+              option.className = "categoriaId";
+              selectCategorias.appendChild(option);
+              selectCategoriasFiltro.appendChild(option.cloneNode(true));
+            }
+          );
+        }
+        
+        static filtraCategoria(){
+          const selectCategoriasFiltro = document.getElementById("categoriaFiltro").value;
+          const categoria = GerenciadorCategorias.categorias[selectCategoriasFiltro].nome;
+          const livros = Biblioteca.listarLivros();
+          const livrosFiltrados = livros.filter((livro) =>
+            livro.categoria.includes(categoria)
+          );
+          UI.exibirLivros(livrosFiltrados);
+        }
 
-      static exibirLivros() {
-        const listaLivros = document.getElementById("listaLivros");
-        listaLivros.innerHTML = "";
+        static filtrarNomeLivro() {
+          const inputFiltro = document.getElementById("inputFiltro");
+          const livros = Biblioteca.listarLivros();
+          inputFiltro.addEventListener("input", () => {
+            const livrosFiltrados = livros.filter((livro) =>
+              livro.titulo.includes(inputFiltro.value)
+            );
+            UI.exibirLivros(livrosFiltrados);
+          });
+        }
 
-        Biblioteca.listarLivros().forEach((livro, index) => {
-          const li = document.createElement("li");
-          li.className =
-            "list-group-item d-flex justify-content-between align-items-center";
-          li.innerHTML = `
+        static exibirLivros(livros) {
+          const listaLivros = document.getElementById("listaLivros");
+          listaLivros.innerHTML = "";
+          
+          livros.forEach((livro, index) => {
+            const li = document.createElement("li");
+            li.className =
+              "list-group-item d-flex justify-content-between align-items-center";
+            li.innerHTML = `
                         <div>
                             <h5 class="mb-1">${livro.titulo}</h5>
                             <small>por ${livro.autor}</small>
@@ -215,71 +280,62 @@
                             ${livro.emprestado ? "Devolver" : "Emprestar"}
                         </button>
                     `;
-          listaLivros.appendChild(li);
-        });
-      }
-
-      static adicionarLivro(e) {
-        e.preventDefault();
-
-        const titulo = document.getElementById("titulo").value;
-        const autor = document.getElementById("autor").value;
-        const paginas = document.getElementById("paginas").value;
-        const categoria = document.getElementById("categoriaLivro").value;
-
-        
-
-        const livro = new Livro(titulo, autor, paginas, GerenciadorCategorias.categorias[categoria].nome);
-        Biblioteca.adicionarLivro(livro);
-
-        UI.limparCampos();
-        UI.exibirLivros();
-      }
-
-      static toggleEmprestimo(index) {
-        const livros = Biblioteca.listarLivros();
-        const livro = livros[index];
-
-        if (livro.emprestado) {
-          livro.devolver();
-        } else {
-          livro.emprestar();
+            listaLivros.appendChild(li);
+          });
         }
 
-        UI.exibirLivros();
-      }
+        static adicionarLivro(e) {
+          e.preventDefault();
 
-      static filtrarNomeLivro() {
-        const inputFiltro = document.getElementById("inputFiltro");
-        inputFiltro.addEventListener("input", () => {
+          const titulo = document.getElementById("titulo").value;
+          const autor = document.getElementById("autor").value;
+          const paginas = document.getElementById("paginas").value;
+          const categoria = document.getElementById("categoriaLivro").value;
+
+          const livro = new Livro(
+            titulo,
+            autor,
+            paginas,
+            GerenciadorCategorias.categorias[categoria].nome
+          );
+          Biblioteca.adicionarLivro(livro);
+
+          UI.limparCampos();
+          UI.exibirLivros(Biblioteca.listarLivros());
+        }
+
+        static toggleEmprestimo(index) {
           const livros = Biblioteca.listarLivros();
-          const livrosFiltrados = livros.filter(livro => livro.titulo.includes(inputFiltro.value));
-          console.log(livrosFiltrados);
-        });
+          const livro = livros[index];
+
+          if (livro.emprestado) {
+            livro.devolver();
+          } else {
+            livro.emprestar();
+          }
+
+          UI.exibirLivros(Biblioteca.listarLivros());
+        }
+
+        static limparCampos() {
+          document.getElementById("titulo").value = "";
+          document.getElementById("autor").value = "";
+          document.getElementById("paginas").value = "";
+        }
+        static limparCamposCategoria() {
+          document.getElementById("categoria").value = "";
+        }
       }
 
-
-
-      static limparCampos() {
-        document.getElementById("titulo").value = "";
-        document.getElementById("autor").value = "";
-        document.getElementById("paginas").value = "";
-      }
-      static limparCamposCategoria() {
-        document.getElementById("categoria").value = "";
-      }
-    }
-
-    document
-      .getElementById("livroForm")
-      .addEventListener("submit", UI.adicionarLivro);
-    document
-      .getElementById("categoriaForm")
-      .addEventListener("submit", UI.adicionarCategoria);
-    UI.exibirLivros();
-    UI.exibirCategoria();
-    UI.filtrarNomeLivro();
-  </script>
-</body>
-
+      document
+        .getElementById("livroForm")
+        .addEventListener("submit", UI.adicionarLivro);
+      document
+        .getElementById("categoriaForm")
+        .addEventListener("submit", UI.adicionarCategoria);
+      UI.exibirLivros(Biblioteca.listarLivros());
+      UI.filtrarNomeLivro();
+      UI.exibirCategoria();
+    </script>
+  </body>
 </html>

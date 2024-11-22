@@ -1,0 +1,8 @@
+/* TODO: Adicionar estilos personalizados */
+.movie-card {
+    transition: transform 0.2s;
+  }
+  
+  .movie-card:hover {
+    /* Adicionar efeito hover */
+  }
