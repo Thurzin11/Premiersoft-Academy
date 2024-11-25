@@ -4,6 +4,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  max-height: 570px;
+  /* min-width: 300px; */
 }
 #closeModal{
   position: absolute;

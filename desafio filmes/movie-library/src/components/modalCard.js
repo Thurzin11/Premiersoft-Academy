@@ -6,7 +6,6 @@ export async function renderModal(movieName) {
   const movie = await getMovieByName(`${movieName}`).then((movie) => {
     return movie;
   });
-
   modal.innerHTML = createMovieModal(movie);
 }
 
@@ -19,7 +18,7 @@ export function createMovieModal(movie) {
           <span id="closeModal" onclick="closeModal()">X</span>
         </div>
         <div class="modal-body d-flex flex-column align-items-center">
-          <img src="${movie.poster}" class="img-fluid" alt="${movie.title}">
+          <img src="${movie.poster}" class="img-fluid col-3 col-md-2" alt="${movie.title}">
           <p><strong>Ano:</strong> ${movie.year}</p>
           <p><strong>Diretor:</strong> ${movie.director}</p>
           <p><strong>Gênero:</strong> ${movie.genre}</p>
