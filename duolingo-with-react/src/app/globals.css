@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+#fundo-header{
+  background-image: url('assets/fundo-header.svg');
+}
+
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}
