@@ -1,3 +1,7 @@
+"use client";
+
+import * as React from "react";
+import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import logo from "./assets/logo.svg";
 import mundo from "./assets/mundo.svg";
@@ -7,11 +11,20 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
 export default function cabecalho() {
-
-    const languages = ['Spanish', 'French', 'German', 'Italian', 'Portuguese', 'Dutch', 'Japanese', 'Russian', 'Korean']
+  const languages = [
+    "Spanish",
+    "French",
+    "German",
+    "Italian",
+    "Portuguese",
+    "Dutch",
+    "Japanese",
+    "Russian",
+    "Korean",
+  ];
 
   return (
     <header className="bg-backgroundSecondary">
@@ -41,7 +54,7 @@ export default function cabecalho() {
             <button className="border border-black font-bold bg-green-600 rounded-md p-1">
               Get Started
             </button>
-            <button className="border border-black font-bold rounded-md p-1">
+            <button className="border border-black font-bold rounded-md p-1 bg-backgroundSecondary">
               I already have an account
             </button>
           </div>
@@ -54,23 +67,30 @@ export default function cabecalho() {
   );
 }
 
-export function CarouselSpacing({languages}) {
-    return (
-        <Carousel className=" w-[90%]"
-        opts={
-            {loop:true}
-        }>
-        <CarouselContent className="">
-          {languages.map((language, index) => (
-            <CarouselItem key={index} className="basis-1/3">
-                <div key={language} className="p-1 flex justify-center">
-                  <span className="text-2xl font-semibold ">{language}</span>
-                </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="bg-transparent" />
-        <CarouselNext className="bg-transparent" />
-      </Carousel>
-    );
-  }
+export function CarouselSpacing({ languages }) {
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true 
+    })
+  );
+  return (
+    <Carousel
+      className=" w-[90%]"
+      plugins={[plugin.current]}
+      // onMouseEnter={plugin.current.stop}
+      // onMouseLeave={plugin.current.reset}
+      opts={{ loop: true }}
+    >
+      <CarouselContent className="">
+        {languages.map((language, index) => (
+          <CarouselItem key={index} className="basis-1/3">
+            <div key={language} className="p-1 flex justify-center">
+              <span className="text-2xl font-semibold ">{language}</span>
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious className="bg-transparent" />
+      <CarouselNext className="bg-transparent" />
+    </Carousel>
+  );
+}
