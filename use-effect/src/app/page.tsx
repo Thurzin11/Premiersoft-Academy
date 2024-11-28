@@ -1,5 +1,5 @@
 "use client";
-
+import { Progress } from "@/components/ui/progress";
 import { useEffect, useState } from "react";
 
 // import Image from "next/image";
@@ -30,11 +30,19 @@ export default function SavedCounter() {
 
         <div className="text-center">
           <p className="text-lg mb-2">Contagem Atual:</p>
-          <p className="text-4xl font-bold text-blue-600">{count}</p>
+          <p
+            className={`text-4xl font-bold text-blue-600 ${count == 0 ? "text-gray-700" : count < 0 ? "text-red-700" : ""}`}
+          >
+            {count}
+          </p>
+          <Progress
+            value={(count + 10) * 5}
+          />
         </div>
 
         <div className="flex gap-2 justify-center">
           <button
+            disabled={count < -9}
             onClick={handleDecrement}
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
           >
@@ -49,6 +57,7 @@ export default function SavedCounter() {
           </button>
 
           <button
+            disabled={count >= 10}
             onClick={handleIncrement}
             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors"
           >
