@@ -13,7 +13,7 @@ export default function GitHub() {
   useEffect(() => {
     fetch('https://api.github.com/users/Thurzin11/repos',{
         headers: {
-            Authorization: `token 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`
+            Authorization: `token `
         }
     })
       .then(res => res.json())
