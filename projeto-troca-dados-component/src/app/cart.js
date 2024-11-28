@@ -1,5 +1,4 @@
 export default function Cart(props) {
-  console.log(props.cart);
   return (
     <footer className="fixed w-[20vw] left-[79vw] h-[100vh] bg-black text-white p-5">
       <div className="h-[80vh] overflow-y-auto snap-y snap-mandatory">
@@ -25,7 +24,7 @@ export default function Cart(props) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col text-sm absolute top-[88vh] border">
+      <div className="flex flex-col text-sm absolute top-[88vh]">
         <span className="font-semibold">
           Total: R${" "}
           {props.cart
