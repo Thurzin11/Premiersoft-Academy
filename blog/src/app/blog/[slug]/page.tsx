@@ -1,12 +1,12 @@
-import Image from "next/image"
-import { getPost } from "@/lib/api"
+import Image from "next/image";
+import { getPost } from "@/lib/api";
 
 export default async function PostPage({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
-  const post = await getPost(parseInt(params.slug))
+  const post = await getPost(parseInt(params.slug));
 
   return (
     <article className="max-w-3xl mx-auto">
@@ -24,6 +24,7 @@ export default async function PostPage({
       <div className="prose lg:prose-xl">
         <p>{post.body}</p>
       </div>
+      <div dangerouslySetInnerHTML={{__html: '<a href="javascript:history.back()"><< Go Back</a>'}}></div>
     </article>
-  )
+  );
 }
