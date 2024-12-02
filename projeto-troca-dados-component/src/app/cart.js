@@ -1,5 +1,4 @@
 export default function Cart(props) {
-  console.log(props.cart);
   return (
     <footer className="fixed w-[20vw] left-[79vw] h-[100vh] bg-black text-white p-5">
       <div className="h-[80vh] overflow-y-auto snap-y snap-mandatory">

@@ -1,11 +1,15 @@
 import duo from "./assets/duo.svg";
 import fire from "./assets/fire.svg";
+import group from "./assets/group.svg";
+import laptop from "./assets/Illustration.svg";
+import woman from "./assets/woman.svg";
+import king from "./assets/Vectors.svg";
 import Image from "next/image";
 
 export default function principal() {
   return (
     <>
-      <div className="grid grid-cols-6 items-center px-[200px] border border-black h-[40vh]">
+      <div className="grid grid-cols-6 items-center px-[200px]   h-[40vh]">
         <Image
           className="col-span-1 my-[20px]"
           src={duo}
@@ -24,27 +28,90 @@ export default function principal() {
           </p>
         </div>
       </div>
-      <div className="grid grid-rows-4 border border-black h-[60vh]">
-        <div className="rows-span-1 grid grid-cols-1 items-center border">
-          <h5 className="border text-center font-bold text-xl">
+      <div className="grid grid-rows-3   h-[60vh]">
+        <div className="row-span-3 grid grid-rows-3 grid-cols-3 border px-[100px]">
+          <h5 className="text-center self-center font-bold text-xl col-span-3">
             Why you’ll love learning with Duolingo
           </h5>
-        </div>
-        <div className="row-span-3 grid grid-cols-4 border border-black">
-          <div className="row-span-1 col-span-1 grid grid-rows-2 grid-cols-9 border border-black">
-            <Image
-              className="col-span-1"
-              src={fire}
-              alt="fire"
-              width={43}
-              height={43}
-            />
-            <div className="border col-span-8 border-black">
-              <h5 className="font-bold ">Efective and efficient</h5>
-              <p>
-                Our courses effectively and efficiently teach reading,
-                listening, and speaking skills. Check out our latest research!
-              </p>
+          <div className="row-span-2 grid grid-cols-1">
+            <div className="row-span-1 col-span-1 grid grid-cols-9">
+              <Image
+                className="col-span-1  "
+                src={fire}
+                alt="fire"
+                width={43}
+                height={43}
+              />
+              <div className="col-span-8 ">
+                <h5 className="font-bold ">Efective and efficient</h5>
+                <p className="w-[215px] h-[96]">
+                  Our courses effectively and efficiently teach reading,
+                  listening, and speaking skills. Check out our latest research!
+                </p>
+              </div>
+            </div>
+            <div className="row-span-1 col-span-1 grid grid-cols-9">
+              <Image
+                className="col-span-1  "
+                src={group}
+                alt="fire"
+                width={43}
+                height={43}
+              />
+              <div className=" col-span-8 ">
+                <h5 className="font-bold ">Personalized learning</h5>
+                <p className="w-[245px] h-[96px]">
+                  Combining the best of AI and language science, lessons are
+                  tailored to help you learn at just the right level and pace.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="row-span-2 grid grid-cols-1 ">
+            <div className="row-span-1 col-span-1 grid grid-cols-9">
+              <Image
+                className="col-span-9 self-center mx-auto"
+                src={laptop}
+                alt="fire"
+                width={245}
+                height={161}
+              />
+            </div>
+          </div>
+          <div className="row-span-2 grid grid-cols-1 ">
+            <div className="row-span-1 col-span-1 grid grid-cols-9">
+              <Image
+                className="col-span-1 "
+                src={king}
+                alt="king"
+                width={43}
+                height={43}
+              />
+              <div className="col-span-8 ">
+                <h5 className="font-bold ">Stay motivated</h5>
+                <p className="w-[325.51px] h-[96]">
+                  We make it easy to form a habit of language learning, with
+                  game-like features, fun challenges, and reminders from our
+                  friendly mascot, Duo the owl.
+                </p>
+              </div>
+            </div>
+            <div className="row-span-1 col-span-1 grid grid-cols-9">
+              <Image
+                className="col-span-1 "
+                src={woman}
+                alt="woman"
+                width={43}
+                height={43}
+              />
+              <div className=" col-span-8 ">
+                <h5 className="font-bold ">Have fun with it!</h5>
+                <p className="w-[325.51px] h-[96]">
+                  Effective learning doesn’t have to be boring! Build your
+                  skills each day with engaging exercises and playful
+                  characters.
+                </p>
+              </div>
             </div>
           </div>
         </div>

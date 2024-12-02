@@ -27,6 +27,7 @@ export default function Card(props) {
       </div>
       <div className="mt-4 flex space-x-2">
         <button
+          disabled={product.quantidade <= 0}
           onClick={() => {
             product.quantidade--;
             props.handleAddToCart(product);
@@ -36,7 +37,11 @@ export default function Card(props) {
           Adicionar
         </button>
         <button
-          onClick={() => props.handleRemoveFromCart(product)}
+          disabled={props.cart.find((item) => item.id === product.id) === undefined}
+          onClick={() => {
+            product.quantidade++;
+            props.handleRemoveFromCart(product);
+          }}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-200"
         >
           Retirar
