@@ -9,7 +9,7 @@ export default function Header() {
           <li>News</li>
           <li>Teams</li>
           <li>Players</li>
-          <li>Leagues</li>
+          <li><a href="/competitions">Leagues</a></li>
         </ul>
     </header>
   );

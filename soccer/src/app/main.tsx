@@ -1,4 +1,4 @@
-import Competitions from "./competitions";
+import Competitions from "./competitions/page";
 
 export default function Main() {
     return (
