@@ -1,10 +1,11 @@
 import axios from "axios";
+import { headers } from "next/headers";
 
 const api = axios.create({
   baseURL: "https://api.football-data.org/v4/",
   headers: {
-    Authorization: "f5515f41681c467a904757d49c444103", // Substitua pela sua chave
-  }
+    "X-Auth-Token": "f5515f41681c467a904757d49c444103",
+  },
 });
 
 export interface Competition {
@@ -62,10 +63,16 @@ export interface Match {
 }
 
 export async function getCompetitions(): Promise<Competition[]> {
-    const response = await api.get<{ competitions: Competition[] }>("competitions");
-    return response.data.competitions;
+  try {
+    const response = await axios.get(
+      "https://api.football-data.org/v2/competitions"
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return [];
   }
-  
+}
 
 export async function getTeams(competitionId: number): Promise<Team[]> {
   const response = await api.get<Team[]>(`competitions/${competitionId}/teams`);
