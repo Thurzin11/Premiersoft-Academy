@@ -4,6 +4,8 @@ import { useState } from "react";
 
 export default function Card(props) {
   const [product, setProduct] = useState(props.product);
+  console.log(product);
+  
   return (
     <div className="hover:bg-gray-100 transition duration-200 border border-gray-300 rounded-lg shadow-lg p-4 max-w-sm bg-white">
       <img

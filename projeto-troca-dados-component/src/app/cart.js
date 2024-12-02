@@ -25,7 +25,7 @@ export default function Cart(props) {
           </div>
         ))}
       </div>
-      <div className="flex flex-col text-sm absolute top-[88vh] border">
+      <div className="flex flex-col text-sm absolute top-[88vh]">
         <span className="font-semibold">
           Total: R${" "}
           {props.cart

@@ -103,19 +103,20 @@ export default function Home() {
       } else {
         return [...prevCart, { ...product, quantidade: 1 }];
       }
-    });    
+    });
   };
 
   const handleRemoveFromCart = (product) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item == product);
-      if(existingProduct.quantidade==1){
-        prevCart.splice(prevCart.indexOf(existingProduct), 1);
-      }else{
-        return existingProduct.quantidade--;
-      }
+      return prevCart
+        .map((item) =>
+          item.id === product.id
+            ? { ...item, quantidade: item.quantidade - 1 }
+            : item
+        )
+        .filter((item) => item.quantidade > 0);
     });
-  };
+  };  
 
   return (
     <div className="grid grid-cols-12">
@@ -129,7 +130,7 @@ export default function Home() {
           />
         ))}
       </main>
-      <Cart className="col-span-2" cart={cart}/>
+      <Cart className="col-span-2" cart={cart} handleRemoveFromCart={()=> handleRemoveFromCart()} />
     </div>
   );
 }
