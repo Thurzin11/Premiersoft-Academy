@@ -9,23 +9,22 @@ const api = axios.create({
 });
 
 export interface Competition {
-  id: number;
-  name: string;
-  area: {
-    name: string;
-    code: string;
-    flag: string;
-  };
-  code: string;
-  plan: string;
-  currentSeason: {
-    id: number;
-    startDate: string;
-    endDate: string;
-    currentMatchday: number;
-  };
-  numberOfAvailableSeasons: number;
-  lastUpdated: string;
+  id: number,
+    area: { id: number, name: string, code: string, flag: null },
+    name: string,
+    code: string,
+    type: string,
+    emblem: string,
+    plan: string,
+    currentSeason: {
+      id: number,
+      startDate: string,
+      endDate: string,
+      currentMatchday: number,
+      winner: [Object]
+    },
+    numberOfAvailableSeasons: number,
+    lastUpdated: string
 }
 
 export interface Team {
@@ -64,10 +63,13 @@ export interface Match {
 
 export async function getCompetitions(): Promise<Competition[]> {
   try {
-    const response = await axios.get(
-      "https://api.football-data.org/v2/competitions"
-    );
-    return response.data;
+    const response = await axios.get("https://api.football-data.org/v4/competitions", {
+      headers: {
+        "X-Auth-Token": "f5515f41681c467a904757d49c444103"
+      }
+    });
+    const competitions: Competition[] = response.data.competitions;
+    return competitions;
   } catch (error) {
     console.log(error);
     return [];
