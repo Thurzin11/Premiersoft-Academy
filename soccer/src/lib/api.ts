@@ -27,18 +27,18 @@ export interface Competition {
     lastUpdated: string
 }
 
-export interface Team {
-  id: number;
-  name: string;
-  shortName: string;
-  tla: string;
-  crest: string;
-  address: string;
-  website: string;
-  founded: number;
-  clubColors: string;
-  venue: string;
-}
+  export interface Team {
+    id: number;
+    name: string;
+    shortName: string;
+    tla: string;
+    crest: string;
+    address: string;
+    website: string;
+    founded: number;
+    clubColors: string;
+    venue: string;
+  }
 
 export interface Match {
   id: number;
@@ -61,6 +61,7 @@ export interface Match {
   };
 }
 
+
 export async function getCompetitions(): Promise<Competition[]> {
   try {
     const response = await axios.get("https://api.football-data.org/v4/competitions", {
@@ -77,6 +78,13 @@ export async function getCompetitions(): Promise<Competition[]> {
 }
 
 export async function getTeams(competitionId: number): Promise<Team[]> {
-  const response = await api.get<Team[]>(`competitions/${competitionId}/teams`);
-  return response.data;
+  try {
+    const response = await api.get<Team[]>(`competitions/${competitionId}/teams`);
+    const teams: Team[] = response.data;
+    console.log(teams);
+    
+  } catch (error) {
+    console.log(error);
+  }
+  return [];
 }

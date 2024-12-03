@@ -1,5 +1,7 @@
 import { getCompetitions } from "@/lib/api";
 import axios from "axios";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export default async function Competitions() {
   const competitions = await getCompetitions();
@@ -11,7 +13,8 @@ export default async function Competitions() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {Array.isArray(competitions) ? (
           competitions.map((competition) => (
-            <div
+            <Link
+              href={`/teams/${competition.id}`}
               key={competition.id}
               className="border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
             >
@@ -28,7 +31,7 @@ export default async function Competitions() {
                   Area: {competition.area.name}
                 </p>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No competitions found</p>
