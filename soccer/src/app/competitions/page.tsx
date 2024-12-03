@@ -14,7 +14,7 @@ export default async function Competitions() {
         {Array.isArray(competitions) ? (
           competitions.map((competition) => (
             <Link
-              href={`/teams/${competition.id}`}
+              href={`/competitions/${competition.id}`}
               key={competition.id}
               className="border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
             >
