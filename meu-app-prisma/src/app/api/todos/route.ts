@@ -36,6 +36,7 @@ export async function PATCH(request: Request) {
     },
     data: {
       title: json.title,
+      completed: json.completed,
     },
   });
   return NextResponse.json({ success: true });

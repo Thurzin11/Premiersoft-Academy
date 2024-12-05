@@ -75,6 +75,21 @@ export default function Home() {
 
     fetchTodos();
   };
+  const updateTodoDone = async (todo: Todo) => {
+    await fetch("/api/todos", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: todo.id,
+        title: todo.title,
+        completed: todo.completed,
+      }),
+    });
+
+    fetchTodos();
+  };
   const changeToEdit = () => {
     setIsEditing(!isEditing);
   };
@@ -82,6 +97,10 @@ export default function Home() {
   const editTodo = async (todo: Todo) => {
     changeToEdit();
     setChangeTodo(todo);
+  };
+  const todoDone = async (todo: Todo) => {
+    todo.completed = true;
+    updateTodoDone(todo);
   };
 
   return (
@@ -122,12 +141,15 @@ export default function Home() {
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Atualizar
           </button>
         </div>
-        <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded " onClick={changeToEdit}>
+        <button
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded "
+          onClick={changeToEdit}
+        >
           Change to Add ToDo
         </button>
       </form>
@@ -138,16 +160,22 @@ export default function Home() {
             key={todo.id}
             className="p-2 bg-gray-100 rounded flex justify-between items-center"
           >
-            <span>{todo.title}</span>
-            <div className="w-[20%] flex justify-around text-white">
+            <span className={`${todo.completed? 'line-through': ''}`}>{todo.title}</span>
+            <div className="w-[30%] flex justify-around text-white">
               <button
-                className="bg-yellow-800 rounded-md w-[40%]"
+                className="bg-green-600 rounded-md w-[20%]"
+                onClick={() => todoDone(todo)}
+              >
+                Done
+              </button>
+              <button
+                className="bg-yellow-800 rounded-md w-[20%]"
                 onClick={() => editTodo(todo)}
               >
                 Edit
               </button>
               <button
-                className="bg-red-700 rounded-md w-[40%]"
+                className="bg-red-700 rounded-md w-[20%]"
                 onClick={() => deleteTodo(todo.id)}
               >
                 Trash
