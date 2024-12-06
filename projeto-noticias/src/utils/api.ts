@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { log } from "console";
+import { NextResponse } from "next/server";
 
 export async function getAllCategories() {
     try {
@@ -39,5 +40,22 @@ export async function getNewsByCategory(categoryId: number) {
         return news;
     } catch (error) {
         console.log('Erro ao buscar notícias por categoria:', error);
+    }
+}
+
+export async function createNew(noticia: any) {
+    try {
+        await prisma.$connect();
+        const category = await prisma.noticia.create({
+            data: {
+                titulo: noticia.titulo,
+                conteudo: noticia.conteudo,
+                autorId: noticia.autorId,
+                categoriaId: noticia.categoriaId
+            }
+        });
+        return NextResponse.json(true);
+    } catch (error) {
+        console.log('Erro ao criar noticia:', error);
     }
 }

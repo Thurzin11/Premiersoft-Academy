@@ -1,4 +1,5 @@
-"use client";
+"use client"
+import { createNew } from "@/utils/api";
 import { useState } from "react";
 
 export default function NovaNoticiaPage() {
@@ -19,23 +20,16 @@ export default function NovaNoticiaPage() {
     };
 
     try {
-      const response = await fetch("/api/noticias", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(noticia),
-      });
+      const responseJson = await createNew(noticia);
 
-      if (response.ok) {
+      if (responseJson) {
         setMensagem("Notícia criada com sucesso!");
         setTitulo("");
         setConteudo("");
         setAutorId("");
         setCategoriaId("");
-      } else {
-        const errorData = await response.json();
-        setMensagem(`Erro: ${errorData.message}`);
+      }else{
+        throw new Error('Erro ao criar a notícia.');
       }
     } catch (error) {
       setMensagem("Erro ao criar a notícia.");
