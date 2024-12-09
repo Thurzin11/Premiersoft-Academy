@@ -1,38 +1,54 @@
-"use client"
-import { createNew } from "@/utils/api";
-import { useState } from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Categoria } from "@/types";
 
 export default function NewsForm() {
-  const [titulo, setTitulo] = useState("");
   const [conteudo, setConteudo] = useState("");
-  const [autorId, setAutorId] = useState("");
-  const [categoriaId, setCategoriaId] = useState("");
+  const [titulo, setTitulo] = useState("");
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [mensagem, setMensagem] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const noticia = {
-      titulo,
-      conteudo,
-      autorId: Number(autorId),
-      categoriaId: Number(categoriaId),
-    };
-
+  const fetchCategories = async () => {
     try {
-      const responseJson = await createNew(noticia);
+      const response = await fetch("/api/admin/categorias", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      if (responseJson) {
-        setMensagem("Notícia criada com sucesso!");
-        setTitulo("");
-        setConteudo("");
-        setAutorId("");
-        setCategoriaId("");
-      }else{
-        throw new Error('Erro ao criar a notícia.');
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar categorias: ${response.statusText}`);
       }
+      const data = await response.json();
+      setCategorias(data);
     } catch (error) {
-      setMensagem("Erro ao criar a notícia.");
+      setMensagem("Erro ao carregar categorias. Tente novamente mais tarde.");
+      console.error("Erro ao buscar categorias:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("/api/admin/noticias", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          titulo,
+          conteudo,
+          categoriaId: Number(event.currentTarget.categoriaId.value),
+        }),
+      });
+    } catch (error) {
+      console.error("Erro ao criar notícia:", error);
     }
   };
 
@@ -43,7 +59,6 @@ export default function NewsForm() {
           Nova Notícia
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Título */}
           <div>
             <label
               htmlFor="titulo"
@@ -55,14 +70,12 @@ export default function NewsForm() {
               id="titulo"
               type="text"
               value={titulo}
-              onChange={(e) => setTitulo(e.target.value)}
+              onChange={(event) => setTitulo(event.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Digite o título"
               required
             />
           </div>
-
-          {/* Conteúdo */}
           <div>
             <label
               htmlFor="conteudo"
@@ -73,53 +86,32 @@ export default function NewsForm() {
             <textarea
               id="conteudo"
               value={conteudo}
-              onChange={(e) => setConteudo(e.target.value)}
+              onChange={(event) => setConteudo(event.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
               placeholder="Digite o conteúdo"
               rows={4}
               required
             />
           </div>
-
-          {/* ID do Autor */}
-          <div>
-            <label
-              htmlFor="autorId"
-              className="block text-sm font-medium text-gray-700"
-            >
-              ID do Autor:
-            </label>
-            <input
-              id="autorId"
-              type="number"
-              value={autorId}
-              onChange={(e) => setAutorId(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="Digite o ID do autor"
-              required
-            />
-          </div>
-
-          {/* ID da Categoria */}
           <div>
             <label
               htmlFor="categoriaId"
               className="block text-sm font-medium text-gray-700"
             >
-              ID da Categoria:
+              Categoria:
             </label>
-            <input
+            <select
               id="categoriaId"
-              type="number"
-              value={categoriaId}
-              onChange={(e) => setCategoriaId(e.target.value)}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              placeholder="Digite o ID da categoria"
               required
-            />
+            >
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.nome}
+                </option>
+              ))}
+            </select>
           </div>
-
-          {/* Botão de Submissão */}
           <div>
             <button
               type="submit"
@@ -129,13 +121,6 @@ export default function NewsForm() {
             </button>
           </div>
         </form>
-
-        {/* Mensagem de Sucesso ou Erro */}
-        {mensagem && (
-          <p className="mt-4 text-center text-sm font-medium text-gray-600">
-            {mensagem}
-          </p>
-        )}
       </div>
     </div>
   );

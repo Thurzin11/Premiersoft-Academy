@@ -8,6 +8,14 @@ export default async function CategoryNav() {
   return (
     <nav className="bg-gray-100 py-4 shadow-md">
       <ul className="flex flex-wrap justify-center gap-4 px-4">
+      <li key={"999"}>
+            <Link
+              href={`/`}
+              className="text-blue-600 hover:text-blue-800 font-medium transition"
+            >
+              {"All News"}
+            </Link>
+          </li>
         {Array.isArray(categories)? categories.map((category) => (
           <li key={category.id}>
             <Link
