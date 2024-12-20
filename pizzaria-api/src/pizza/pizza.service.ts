@@ -3,7 +3,7 @@ import { CreatePizzaDto } from './dto/create-pizza.dto';
 import { UpdatePizzaDto } from './dto/update-pizza.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pizza } from './entities/pizza.entity';
-import { Repository } from 'typeorm';
+import { Between, MoreThan, Repository } from 'typeorm';
 
 @Injectable()
 export class PizzaService {
@@ -11,6 +11,14 @@ export class PizzaService {
     @InjectRepository(Pizza)
     private pizzaRepository: Repository<Pizza>,
   ) {}
+
+  async getByPrice(lessPrice: number, morePrice: number): Promise<Pizza[]> {
+    return await this.pizzaRepository.find({
+      where: {
+        price: Between(lessPrice, morePrice),
+      },
+    });
+  }
 
   async create(createPizzaDto: CreatePizzaDto): Promise<Pizza> {
     const pizza = this.pizzaRepository.create(createPizzaDto);
