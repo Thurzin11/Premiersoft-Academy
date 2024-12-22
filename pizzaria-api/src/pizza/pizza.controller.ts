@@ -7,6 +7,8 @@ import {
   Param,
   Delete,
   Res,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -50,6 +52,11 @@ export class PizzaController {
   })
   async findAll(@Res() res): Promise<Pizza[]> {
     return res.status(200).send(await this.pizzaService.findAll());
+  }
+
+  @Get('price')
+  async getByPrice(@Query('price', ParseIntPipe) price: number) {
+    return await this.pizzaService.getByPrice(price);
   }
 
   @Get(':id')
