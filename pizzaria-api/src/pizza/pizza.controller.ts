@@ -56,6 +56,7 @@ export class PizzaController {
   }
 
   @Get('byAvailable')
+  @ApiOperation({ summary: 'Lista todas as pizzas disponiveis' })
   async findByAvailable(): Promise<Pizza[]> {
     return this.pizzaService.getByAvailable();
   }
