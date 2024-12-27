@@ -15,8 +15,8 @@ import {
   ApiOperation,
   ApiResponse,
   ApiParam,
-  ApiBody,
-} from '@nestjs/swagger';
+  ApiBody, ApiQuery
+} from "@nestjs/swagger";
 import { PizzaService } from './pizza.service';
 import { CreatePizzaDto } from './dto/create-pizza.dto';
 import { UpdatePizzaDto } from './dto/update-pizza.dto';
@@ -55,6 +55,13 @@ export class PizzaController {
   }
 
   @Get('price')
+  @ApiOperation({ summary: 'Buscar pizzas pelo preço' })
+  @ApiQuery({
+    name: 'price',
+    description: 'O preço pelo qual filtrar as pizzas',
+    type: Number,
+    required: true,
+  })
   async getByPrice(@Query('price', ParseIntPipe) price: number) {
     return await this.pizzaService.getByPrice(price);
   }

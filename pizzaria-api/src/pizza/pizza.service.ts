@@ -37,6 +37,10 @@ export class PizzaService {
     return await this.pizzaRepository.update(id, updatePizzaDto);
   }
 
+  async getByAvailable() {
+    return await this.pizzaRepository.find({ where: { isAvailable: true } });
+  }
+
   async remove(id: string): Promise<boolean> {
     const isDeleted = await this.pizzaRepository.delete(id);
     return isDeleted.affected !== 0;
