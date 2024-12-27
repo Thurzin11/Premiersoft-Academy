@@ -15,8 +15,9 @@ import {
   ApiOperation,
   ApiResponse,
   ApiParam,
-  ApiBody, ApiQuery
-} from "@nestjs/swagger";
+  ApiBody,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { PizzaService } from './pizza.service';
 import { CreatePizzaDto } from './dto/create-pizza.dto';
 import { UpdatePizzaDto } from './dto/update-pizza.dto';
@@ -52,6 +53,11 @@ export class PizzaController {
   })
   async findAll(@Res() res): Promise<Pizza[]> {
     return res.status(200).send(await this.pizzaService.findAll());
+  }
+
+  @Get('byAvailable')
+  async findByAvailable(): Promise<Pizza[]> {
+    return this.pizzaService.getByAvailable();
   }
 
   @Get('price')

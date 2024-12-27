@@ -37,7 +37,7 @@ export class PizzaService {
     return await this.pizzaRepository.update(id, updatePizzaDto);
   }
 
-  async getByAvailable() {
+  async getByAvailable(): Promise<Pizza[]> {
     return await this.pizzaRepository.find({ where: { isAvailable: true } });
   }
 
