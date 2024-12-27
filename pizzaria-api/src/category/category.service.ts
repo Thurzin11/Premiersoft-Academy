@@ -28,6 +28,10 @@ export class CategoryService {
     });
   }
 
+  async getByName(name: string): Promise<Category> {
+    return await this.categoryRepository.findOne({ where: { name } });
+  }
+
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     const response = await this.categoryRepository.update(
       id,
