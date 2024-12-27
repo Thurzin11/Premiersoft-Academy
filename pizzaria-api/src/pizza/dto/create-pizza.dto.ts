@@ -6,11 +6,10 @@ import {
   IsOptional,
   MinLength,
   IsArray,
-  IsUUID,
   ValidateNested,
 } from 'class-validator';
 import { Category } from '../../category/entities/category.entity';
-import { Type } from "class-transformer";
+import { Type } from 'class-transformer';
 
 export class CreatePizzaDto {
   @ApiProperty({ example: 'Margherita' })
@@ -56,7 +55,6 @@ export class CreatePizzaDto {
       'Lista de categorias associadas à pizza, passando os objetos completos',
   })
   @IsArray()
-  @ValidateNested({ each: true })
   @Type(() => Category)
   categories: Category[];
 }
