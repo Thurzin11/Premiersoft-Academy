@@ -1,14 +1,19 @@
+import Header from "../header";
 export default function List() {
   return (
-    <div className="grid grid-cols-12">
-      <div className="flex flex-col col-span-2">
-        <label htmlFor="task">Task</label>
-        <input
-          className="border border-black placeholder:text-black px-2"
-          type="text"
-          placeholder="Insira uma Task"
-        />
-      </div>
+    <div>
+      <Header />
+      <ul className="bg-gray-800 text-white">
+        <li className="flex justify-between px-10 border-b border-b-black">
+          <p>Item 1</p>
+          <div className="flex justify-around w-[20%] ">
+            <button className=" border w-[40%] rounded-md bg-green-900">
+              Edit
+            </button>
+            <button className="bg-red-900 border rounded-md w-[40%]">Delete</button>
+          </div>
+        </li>
+      </ul>
     </div>
   );
 }

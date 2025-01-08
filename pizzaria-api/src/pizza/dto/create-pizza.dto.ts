@@ -6,7 +6,6 @@ import {
   IsOptional,
   MinLength,
   IsArray,
-  ValidateNested,
 } from 'class-validator';
 import { Category } from '../../category/entities/category.entity';
 import { Type } from 'class-transformer';

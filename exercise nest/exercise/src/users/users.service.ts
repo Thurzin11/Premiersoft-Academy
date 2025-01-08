@@ -1,23 +1,53 @@
-import { Injectable } from '@nestjs/common';
+import { ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { In, Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { generateHash } from 'src/utils/bcrypt';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const password = generateHash(createUserDto.password);
+    const user = this.userRepository.create({ ...createUserDto, password });
+    user.status = true;
+    user.createdAt = new Date();
+    user.updatedAt = new Date();
+    return await this.userRepository.save(user);
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: string): Promise<User | NotFoundException> {
+    try {
+      const userFound: User = await this.userRepository.findOne({ where: { id: id } });
+      if (!userFound) {
+        return new NotFoundException();
+      }
+      return userFound;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | NotFoundException> {
+    try {
+      const userFound: User = await this.userRepository.findOne({ where: { id: id } });
+      if (!userFound) {
+        return new NotFoundException();
+      }
+      return await this.userRepository.update(id, updateUserDto);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   remove(id: number) {
