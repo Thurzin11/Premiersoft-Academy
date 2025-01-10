@@ -33,6 +33,16 @@ export class PizzaService {
     return await this.pizzaRepository.findOne({ where: { id } });
   }
 
+  async findByCategory(categoryId: string): Promise<Pizza[]> {
+    return await this.pizzaRepository
+      .createQueryBuilder('p')
+      .innerJoin('pizza_category', 'pc', 'pc.pizza_id = p.id') // Join the pivot table
+      .innerJoin('category', 'c', 'pc.category_id = c.id') // Join the category table
+      .where('c.id = :categoryId', { categoryId }) // Add the WHERE condition
+      .select('p') // Select only fields from the pizza table
+      .getMany();
+  }
+
   async update(id: string, updatePizzaDto: UpdatePizzaDto) {
     return await this.pizzaRepository.update(id, updatePizzaDto);
   }

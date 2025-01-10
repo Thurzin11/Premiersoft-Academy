@@ -61,6 +61,11 @@ export class PizzaController {
     return this.pizzaService.getByAvailable();
   }
 
+  @Get('byCategory/:id')
+  async findByCategory(@Param('id') id: string): Promise<Pizza[]> {
+    return await this.pizzaService.findByCategory(id);
+  }
+
   @Get('price')
   @ApiOperation({ summary: 'Buscar pizzas pelo preço' })
   @ApiQuery({
