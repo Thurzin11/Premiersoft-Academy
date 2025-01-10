@@ -31,3 +31,15 @@ export async function getCategories(): Promise<ICategory[]> {
     return [];
   }
 }
+
+export async function getPizzasByCategory(id: string): Promise<IPizza[]> {
+  try {
+    const response = await axios.get<IPizza[]>(
+      `${process.env.HOST}/pizza/byCategory/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
