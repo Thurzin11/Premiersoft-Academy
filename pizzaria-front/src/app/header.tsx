@@ -9,8 +9,8 @@ const Header = () => {
         <ul>
           <li className="flex justify-around">
             <Link href={"/pizzas"}>Pizzas</Link>
-            <Link href={"/categorias"}>Categorias</Link>
-            <Link href={"/carrinho"}>Carrinho</Link>
+            <Link href={"/categories"}>Categorias</Link>
+            <Link href={"/cart"}>Carrinho</Link>
           </li>
         </ul>
       </nav>
