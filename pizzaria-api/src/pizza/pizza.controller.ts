@@ -62,6 +62,7 @@ export class PizzaController {
   }
 
   @Get('byCategory/:id')
+  @ApiOperation({ summary: 'Lista todas as pizza da categoria passada' })
   async findByCategory(@Param('id') id: string): Promise<Pizza[]> {
     return await this.pizzaService.findByCategory(id);
   }
