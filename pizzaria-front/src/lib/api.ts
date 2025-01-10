@@ -10,6 +10,16 @@ export async function getPizzas(): Promise<IPizza[]> {
   }
 }
 
+export async function getPizzaById(id: string): Promise<IPizza> {
+  try {
+    const response = await axios.get<IPizza>(`${process.env.HOST}/pizza/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return {} as IPizza;
+  }
+}
+
 export async function getCategories(): Promise<ICategory[]> {
   try {
     const response = await axios.get<ICategory[]>(

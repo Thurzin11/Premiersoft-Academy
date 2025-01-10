@@ -1,15 +1,16 @@
 import { getPizzas } from "@/lib/api";
+import Link from "next/link";
 import React from "react";
 
 const ListPizzas: React.FC = async () => {
   const pizzas: IPizza[] = await getPizzas();
+  
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-6 text-center">Pizzas</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {pizzas.map((pizza) => (
-          <div
-            key={pizza.id}
+          <Link href={`/pizzas/${pizza.id}`} key={pizza.id}
             className="border rounded-lg shadow-lg p-4 bg-white flex flex-col"
           >
             <h2 className="text-xl font-semibold mb-2">{pizza.name}</h2>
@@ -22,18 +23,7 @@ const ListPizzas: React.FC = async () => {
             >
               {pizza.isAvailable ? "Disponível" : "Indisponível"}
             </p>
-            <div className="mt-4">
-              <h3 className="text-sm font-bold mb-2">Categorias:</h3>
-              <ul className="list-disc list-inside text-gray-600">
-                {pizza.categories.map((category) => (
-                  <li key={category.id}>
-                    <span className="font-semibold">{category.name}:</span>{" "}
-                    {category.description}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
