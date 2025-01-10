@@ -3,16 +3,25 @@ import Link from "next/link";
 import React from "react";
 
 interface ListPizzaProps {
-    pizzas: IPizza[],
-    category: ICategory
-  }
+  pizzas: IPizza[];
+  category: ICategory;
+}
 
 const ListPizzas: React.FC<ListPizzaProps> = async ({ pizzas, category }) => {
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-        Lista de Pizzas {category.name ? "da categoria " + category.name.toLowerCase() : ""}
-      </h1>
+      <div className="flex justify-between items-center mb-8 p-3">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">
+          Lista de Pizzas{" "}
+          {category.name ? "da categoria " + category.name.toLowerCase() : ""}
+        </h1>
+        <Link
+          href={"categories/new"}
+          className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 h-[50%]"
+        >
+          Criar nova Pizza
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {pizzas.map((pizza) => (
           <Link
