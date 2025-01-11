@@ -2,7 +2,9 @@ import axios from "axios";
 
 export async function getPizzas(): Promise<IPizza[]> {
   try {
-    const response = await axios.get<IPizza[]>(`${process.env.NEXT_PUBLIC_HOST}/pizza`);
+    const response = await axios.get<IPizza[]>(
+      `${process.env.NEXT_PUBLIC_HOST}/pizza`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -12,7 +14,9 @@ export async function getPizzas(): Promise<IPizza[]> {
 
 export async function getPizzaById(id: string): Promise<IPizza> {
   try {
-    const response = await axios.get<IPizza>(`${process.env.HOST}/pizza/${id}`);
+    const response = await axios.get<IPizza>(
+      `${process.env.NEXT_PUBLIC_HOST}/pizza/${id}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -44,9 +48,11 @@ export async function getPizzasByCategory(id: string): Promise<IPizza[]> {
   }
 }
 
-export async function getCategoryById(id:string): Promise<ICategory> {
+export async function getCategoryById(id: string): Promise<ICategory> {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/category/${id}`);
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_HOST}/category/${id}`
+    );
     return response.data;
   } catch (error) {
     console.error(error);
@@ -66,5 +72,32 @@ export async function createCategory(category: {
     return response.data;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function createPizza(pizza: IPizza) {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_HOST}/pizza`,
+      pizza
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getCategoriesByName(
+  nameSearch: string
+): Promise<ICategory[]> {
+  try {
+    console.log(nameSearch);
+    const response = await axios.get<ICategory[]>(
+      `${process.env.NEXT_PUBLIC_HOST}/category/name/${nameSearch}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 }
