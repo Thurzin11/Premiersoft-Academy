@@ -13,10 +13,10 @@ const ListPizzas: React.FC<ListPizzaProps> = async ({ pizzas, category }) => {
       <div className="flex justify-between items-center mb-8 p-3">
         <h1 className="text-3xl font-bold text-gray-800 text-center">
           Lista de Pizzas{" "}
-          {category.name ? "da categoria " + category.name.toLowerCase() : ""}
+          {category.name ? "da Categoria " + category.name : ""}
         </h1>
         <Link
-          href={"categories/new"}
+          href={"pizzas/new"}
           className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 h-[50%]"
         >
           Criar nova Pizza
