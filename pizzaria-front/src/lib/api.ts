@@ -75,7 +75,7 @@ export async function createCategory(category: {
   }
 }
 
-export async function createPizza(pizza: IPizza) {
+export async function createPizza(pizza: { name: string; description: string; price: number; isAvailable: boolean; categories: ICategory[] }) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_HOST}/pizza`,

@@ -1,4 +1,5 @@
 "use client";
+import Pill from "@/components/Pill";
 import { createPizza, getCategories, getCategoriesByName } from "@/lib/api";
 import React, { use, useEffect, useState } from "react";
 
@@ -27,41 +28,46 @@ const page = () => {
     updateSuggestionsCategories(searchCategory);
   }, [searchCategory]);
 
+  const correctCategory = (wrongCategory: ICategory[]) => {
+    const rightCategory = wrongCategory.filter(
+      (categories) =>
+        !categoriesSelect.some((category) => category.id === categories.id)
+    );
+    return rightCategory;
+  };
+
   const updateSuggestionsCategories = async (nameCategory: string) => {
     if (nameCategory) {
       const response = await getCategoriesByName(nameCategory);
-      const suggestCategoryRight = response.filter(
-        (categories) =>
-          !categoriesSelect.some((category) => category.id === categories.id)
-      );
-      console.log(suggestCategoryRight);
-      console.log(categoriesSelect);
+      const suggestCategoryRight: ICategory[] = correctCategory(response);
+      console.log("All categories by name ", suggestCategoryRight);
+      console.log("Categories selected ", categoriesSelect);
       setSuggestionsCategory(suggestCategoryRight);
     } else {
       const response = await getCategories();
-      const suggestCategoryRight = response.filter(
-        (categories) =>
-          !categoriesSelect.some((category) => category.id === categories.id)
-      );
-      console.log(suggestCategoryRight);
-      console.log(categoriesSelect);
+      const suggestCategoryRight = correctCategory(response);
+      console.log("All categories ", suggestCategoryRight);
+      console.log("Categories selected ", categoriesSelect);
       setSuggestionsCategory(suggestCategoryRight);
     }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const pizza: IPizza = {
-      id: "",
+    const pizza = {
       name,
       description,
       price,
       isAvailable,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      categories: [],
+      categories: categoriesSelect,
     };
-    createPizza(pizza);
+
+    await createPizza(pizza);
+  };
+
+  const removeSelectCategory = (category: ICategory) => {
+    setCategoriesSelect(categoriesSelect.filter((c) => c.id !== category.id));
+    updateSuggestionsCategories(searchCategory);
   };
 
   return (
@@ -116,6 +122,15 @@ const page = () => {
         <label htmlFor="categories" className="text-gray-800 font-semibold">
           Categorias
         </label>
+        {categoriesSelect.map((category) => {
+          return (
+            <Pill
+              key={category.id}
+              category={category}
+              handleDelete={removeSelectCategory}
+            />
+          );
+        })}
         <div>
           <input
             type="text"
