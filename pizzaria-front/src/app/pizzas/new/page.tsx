@@ -12,6 +12,16 @@ const page = () => {
   const [suggestionsCategory, setSuggestionsCategory] = useState<ICategory[]>(
     []
   );
+  const [categoriesSelect, setCategoriesSelect] = useState<ICategory[]>([]);
+
+  const handleSelectCategory = (category: ICategory) => {
+    setSearchCategory("");
+    setSuggestionsCategory(
+      suggestionsCategory.filter((c) => c.id !== category.id)
+    );
+    setCategoriesSelect([...categoriesSelect, category]);
+    console.log(categoriesSelect);
+  };
 
   useEffect(() => {
     updateSuggestionsCategories(searchCategory);
@@ -20,12 +30,22 @@ const page = () => {
   const updateSuggestionsCategories = async (nameCategory: string) => {
     if (nameCategory) {
       const response = await getCategoriesByName(nameCategory);
-      setSuggestionsCategory(response);
-      console.log(response);
+      const suggestCategoryRight = response.filter(
+        (categories) =>
+          !categoriesSelect.some((category) => category.id === categories.id)
+      );
+      console.log(suggestCategoryRight);
+      console.log(categoriesSelect);
+      setSuggestionsCategory(suggestCategoryRight);
     } else {
       const response = await getCategories();
-      setSuggestionsCategory(response);
-      console.log(response);
+      const suggestCategoryRight = response.filter(
+        (categories) =>
+          !categoriesSelect.some((category) => category.id === categories.id)
+      );
+      console.log(suggestCategoryRight);
+      console.log(categoriesSelect);
+      setSuggestionsCategory(suggestCategoryRight);
     }
   };
 
@@ -96,15 +116,27 @@ const page = () => {
         <label htmlFor="categories" className="text-gray-800 font-semibold">
           Categorias
         </label>
-        <input
-          type="text"
-          value={searchCategory}
-          onChange={(e) => {
-            setSearchCategory(e.target.value);
-          }}
-          placeholder="Pesquise uma categoria para pesquisar"
-          className="border border-gray-300 rounded-lg p-2"
-        />
+        <div>
+          <input
+            type="text"
+            value={searchCategory}
+            onChange={(e) => {
+              setSearchCategory(e.target.value);
+            }}
+            placeholder="Pesquise uma categoria para pesquisar"
+            className="border border-gray-300 rounded-lg p-2 w-full"
+          />
+          <ul className="max-h-40 overflow-y-auto border border-gray-300 rounded-lg p-2">
+            {suggestionsCategory.map((category) => (
+              <li
+                key={category.id}
+                onClick={() => handleSelectCategory(category)}
+              >
+                {category.name}
+              </li>
+            ))}
+          </ul>
+        </div>
         <button
           type="submit"
           className="bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
