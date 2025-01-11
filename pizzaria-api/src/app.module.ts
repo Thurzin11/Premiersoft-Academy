@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { PizzaModule } from './pizza/pizza.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PizzaModule } from './pizza/pizza.module';
     }),
     CategoryModule,
     PizzaModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
