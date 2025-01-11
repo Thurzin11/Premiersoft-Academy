@@ -57,7 +57,6 @@ export class CategoryController {
   @Get('name/:name')
   @ApiOperation({ summary: 'Encontra categoria por nome' })
   async findByName(@Param('name') name: string): Promise<Category[]> {
-    console.log(name);
     return this.categoryService.getByName(name);
   }
 
