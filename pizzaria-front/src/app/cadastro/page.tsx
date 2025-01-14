@@ -3,7 +3,8 @@ import { createUser } from "@/lib/api";
 import React, { useState } from "react";
 import { UserRole } from "../../../models/UserRole";
 import { IUserCreate } from "../../../models/IUserCreate";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
+
 
 const Page = () => {
     const navegar = useRouter();
@@ -18,7 +19,7 @@ const Page = () => {
     event.preventDefault();
     // console.log(newUser);
     await createUser(newUser);
-    navegar.replace("/login");
+    navegar.push('/login');
   };
 
   return (
