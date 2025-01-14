@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IUserCreate } from "../../models/IUserCreate";
 
 export async function getPizzas(): Promise<IPizza[]> {
   try {
@@ -75,7 +76,13 @@ export async function createCategory(category: {
   }
 }
 
-export async function createPizza(pizza: { name: string; description: string; price: number; isAvailable: boolean; categories: ICategory[] }) {
+export async function createPizza(pizza: {
+  name: string;
+  description: string;
+  price: number;
+  isAvailable: boolean;
+  categories: ICategory[];
+}) {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_HOST}/pizza`,
@@ -99,5 +106,15 @@ export async function getCategoriesByName(
   } catch (error) {
     console.error(error);
     return [];
+  }
+}
+
+export async function createUser(user: IUserCreate) {
+  try {
+    console.log(user);    
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/user`,user);
+    return response.data;
+  } catch (error) {
+    console.error(error);
   }
 }

@@ -61,7 +61,6 @@ const page = () => {
       isAvailable,
       categories: categoriesSelect,
     };
-
     await createPizza(pizza);
   };
 

@@ -2,6 +2,7 @@ import { getPizzas } from "@/lib/api";
 import Link from "next/link";
 import React from "react";
 
+
 interface ListPizzaProps {
   pizzas: IPizza[];
   category: ICategory;
