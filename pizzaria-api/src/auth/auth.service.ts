@@ -19,13 +19,17 @@ export class AuthService {
   async signIn({ email, pass }: AuthPayloadDto) {
     const findUser = await this.userRepository.findOne({ where: { email } });
     if (!findUser) throw new UnauthorizedException();
-    console.log(findUser.password);
     const isMatch = await bcrypt.compare(pass, findUser.password);
     if (!isMatch) throw new UnauthorizedException();
-    const { password, ...result } = findUser;
+    const { password } = findUser;
     const payload = { email, password };
     return {
       access_token: await this.jwtService.signAsync(payload),
+      user: {
+        id: findUser.id,
+        email: findUser.email,
+        name: findUser.name,
+      },
     };
   }
 
