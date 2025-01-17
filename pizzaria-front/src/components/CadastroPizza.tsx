@@ -3,7 +3,11 @@ import Pill from "@/components/Pill";
 import { createPizza, getCategories, getCategoriesByName } from "@/lib/api";
 import React, { use, useEffect, useState } from "react";
 
-const page = () => {
+interface propsCreate {
+  token: string;
+}
+
+const CadastroPizza = (props: propsCreate) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -38,13 +42,13 @@ const page = () => {
 
   const updateSuggestionsCategories = async (nameCategory: string) => {
     if (nameCategory) {
-      const response = await getCategoriesByName(nameCategory);
+      const response = await getCategoriesByName(nameCategory, props.token);
       const suggestCategoryRight: ICategory[] = correctCategory(response);
       console.log("All categories by name ", suggestCategoryRight);
       console.log("Categories selected ", categoriesSelect);
       setSuggestionsCategory(suggestCategoryRight);
     } else {
-      const response = await getCategories();
+      const response = await getCategories(props.token);
       const suggestCategoryRight = correctCategory(response);
       console.log("All categories ", suggestCategoryRight);
       console.log("Categories selected ", categoriesSelect);
@@ -61,7 +65,7 @@ const page = () => {
       isAvailable,
       categories: categoriesSelect,
     };
-    await createPizza(pizza);
+    await createPizza(pizza, props.token);
   };
 
   const removeSelectCategory = (category: ICategory) => {
@@ -162,4 +166,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CadastroPizza;

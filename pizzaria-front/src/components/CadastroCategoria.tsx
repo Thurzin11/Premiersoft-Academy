@@ -3,13 +3,17 @@
 import { createCategory } from "@/lib/api";
 import React, { useState } from "react";
 
-const page = () => {
+interface propsCreateCategory {
+  token: string;
+}
+
+const CadastroCategoria = ( token: propsCreateCategory) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    createCategory({ name, description });
+    createCategory({ name, description }, token.token);
   };
 
   return (
@@ -50,4 +54,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default CadastroCategoria;

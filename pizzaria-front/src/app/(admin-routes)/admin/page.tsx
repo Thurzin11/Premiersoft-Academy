@@ -8,7 +8,6 @@ const page = async () => {
   const session = await getServerSession(nextAuthOptions);  
   return (
     <>
-      <Header />
       <div className="w-[100vw] h-[90vh] flex justify-center items-center text-center">
         <div className="w-[50%] h-[25%]">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">

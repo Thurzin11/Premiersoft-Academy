@@ -24,7 +24,7 @@ const ListPizzas: React.FC<ListPizzaProps> = async ({ pizzas, category }) => {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {pizzas.map((pizza) => (
+        {pizzas.length>0 ? pizzas.map((pizza) => (
           <Link
             href={`/pizzas/${pizza.id}`}
             key={pizza.id}
@@ -43,7 +43,7 @@ const ListPizzas: React.FC<ListPizzaProps> = async ({ pizzas, category }) => {
               {pizza.isAvailable ? "Disponível" : "Indisponível"}
             </p>
           </Link>
-        ))}
+        )): <p>Nenhuma pizza com esta categoria</p>}
       </div>
     </div>
   );

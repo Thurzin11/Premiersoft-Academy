@@ -1,35 +1,56 @@
-import { getCategories } from "@/lib/api";
+"use client";
+import { getCategories, getCategoriesByName } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const ListCategories = async () => {
-  const showSearch = false;
-  const categories: ICategory[] = await getCategories();
+interface props {
+  token: string;
+}
+
+const ListCategorias = ({ token }: props) => {
+  const [nomeSearch, setNomeSearch] = useState<string>("");
+  const [categories, setCategories] = useState<ICategory[]>([]);
+  const [showSearch, setShowSearch] = useState(false);
+
+  useEffect(()=>{
+    const fetchCategories = async () => {
+      if (nomeSearch === "") {
+        setCategories(await getCategories(token));
+        return;
+      }
+      setCategories(await getCategoriesByName(nomeSearch,token));
+    }
+    fetchCategories();
+  },[nomeSearch])
+
+
+  const handleSearch = () => {
+    setShowSearch(!showSearch);
+  };
   return (
     <div className="p-8">
-      <div className="flex justify-between items-center mb-8 p-3">
-        <div className="w-[40%]">
-          <h1 className="text-3xl w-[100%]  font-bold text-gray-800 text-center">
-            Lista de Categorias
-          </h1>
-        </div>
-        <div className="border w-[50%] flex justify-end">
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl w-[100%] font-bold text-gray-800 text-start">
+          Lista de Categorias
+        </h1>
+        <div className="w-[30%] flex justify-between">
           <Link
             href={"categories/new"}
             className={`bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 h-[50%] ${showSearch ? "hidden" : ""}`}
           >
             Criar nova categoria
           </Link>
-        </div>
-        <div className={`flex items-center`}>
           <input
+            onChange={(e) => setNomeSearch(e.target.value)}
+            value={nomeSearch}
             type="text"
-            className={`p-1 border rounded-md ${showSearch ? "" : "hidden"}`}
+            placeholder="Informe o nome da categoria"
+            className={`p-1 w-[80%] border rounded-md ${showSearch ? "" : "hidden"}`}
           />
-          <span>
+          <span onClick={handleSearch}>
             <Image
-              className="cursor-pointer border"
+              className="cursor-pointer"
               src={"/assets/lupa.png"}
               alt="lupa-search"
               width={40}
@@ -76,4 +97,4 @@ const ListCategories = async () => {
   );
 };
 
-export default ListCategories;
+export default ListCategorias;
