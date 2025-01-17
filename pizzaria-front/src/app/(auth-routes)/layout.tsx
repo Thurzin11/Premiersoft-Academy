@@ -9,13 +9,12 @@ interface PrivateLayoutProps {
 
 const PrivateLayout = async ({ children }: PrivateLayoutProps) => {
   const session = await getServerSession(nextAuthOptions);
-
+  
   if (session) {
     redirect("/admin");
   }
 
-  return <div>{children}</div>;
-
+  return <>{children}</>;
 };
 
 export default PrivateLayout;

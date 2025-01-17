@@ -14,7 +14,7 @@ const PrivateLayout = async ({ children }: PrivateLayoutProps) => {
     redirect("/");
   }
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 
 };
 

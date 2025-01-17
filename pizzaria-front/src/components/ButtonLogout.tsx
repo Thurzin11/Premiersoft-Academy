@@ -5,16 +5,16 @@ import React from "react";
 
 const ButtonLogout = () => {
   const router = useRouter();
-  function handleLogout() {
-    signOut({
+  async function handleLogout() {
+    await signOut({
       redirect: false,
     });
-    router.replace("/");
+    router.replace('/');
   }
   return (
     <button
+      className="border rounded-md p-2 px-5 bg-red-600 text-white"
       onClick={handleLogout}
-      className="p-2 w-40 border border-gray-300 rounded-md"
     >
       Sair
     </button>

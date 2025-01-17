@@ -1,4 +1,3 @@
-
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 import Header from "@/app/header";
 import ButtonLogout from "@/components/ButtonLogout";
@@ -6,7 +5,7 @@ import { getServerSession } from "next-auth";
 import React from "react";
 
 const page = async () => {
-  const session = await getServerSession(nextAuthOptions);
+  const session = await getServerSession(nextAuthOptions);  
   return (
     <>
       <Header />
@@ -21,7 +20,7 @@ const page = async () => {
             Descubra a pizza perfeita para você e tenha uma experiência saborosa
             e inesquecível!
           </p>
-          <ButtonLogout/>
+          <ButtonLogout />
         </div>
       </div>
     </>
