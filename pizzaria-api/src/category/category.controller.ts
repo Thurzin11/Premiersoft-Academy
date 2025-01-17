@@ -19,12 +19,14 @@ import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { Category } from './entities/category.entity';
+import { Public } from '../auth/constants/constants';
 
 @ApiTags('category')
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Cria uma nova categoria' })
   @ApiResponse({
@@ -43,6 +45,7 @@ export class CategoryController {
     return res.status(201).send(categoryCreated);
   }
 
+  @Public()
   @Get()
   @ApiOperation({ summary: 'Lista todas as categorias' })
   @ApiResponse({
@@ -54,6 +57,7 @@ export class CategoryController {
     return await this.categoryService.findAll();
   }
 
+  @Public()
   @Get('name/:name')
   @ApiOperation({ summary: 'Encontra categoria por nome' })
   async findByName(@Param('name') name: string): Promise<Category[]> {

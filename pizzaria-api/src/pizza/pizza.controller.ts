@@ -22,12 +22,14 @@ import { PizzaService } from './pizza.service';
 import { CreatePizzaDto } from './dto/create-pizza.dto';
 import { UpdatePizzaDto } from './dto/update-pizza.dto';
 import { Pizza } from './entities/pizza.entity';
+import { Public } from "../auth/constants/constants";
 
 @ApiTags('Pizza')
 @Controller('pizza')
 export class PizzaController {
   constructor(private readonly pizzaService: PizzaService) {}
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Cria uma nova pizza' })
   @ApiResponse({
@@ -44,6 +46,7 @@ export class PizzaController {
     return res.status(201).send(pizza);
   }
 
+  @Public()
   @Get()
   @ApiOperation({ summary: 'Lista todas as pizzas' })
   @ApiResponse({
