@@ -27,6 +27,9 @@ const ListCategorias = ({ token }: props) => {
 
   const handleSearch = () => {
     setShowSearch(!showSearch);
+    if (showSearch) {
+      setNomeSearch("");
+    }
   };
   return (
     <div className="p-8">
