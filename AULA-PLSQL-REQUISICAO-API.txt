@@ -1,0 +1,177 @@
+CREATE UPDATE TABLE T_POKEMON_ACADEMY06(
+    ID NUMBER PRIMARY KEY,
+    NOME_POKEMON VARCHAR(50),
+    ORDEM INTEGER,
+    PESO DECIMAL(6,2) NOT NULL CHECK (peso > 0),
+    TIPO VARCHAR2(50),
+    DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    DATA_ATUALIZACAO TIMESTAMP
+)
+
+CREATE SEQUENCE T_POKEMON_SEQUENCE_ACADEMY06
+START WITH 1
+INCREMENT BY 1
+CACHE 20;
+
+CREATE OR REPLACE TRIGGER T_POKEMON_TRIGGER_ACADEMY06
+BEFORE INSERT ON T_POKEMON_ACADEMY06
+FOR EACH ROW
+BEGIN
+    IF :NEW.id IS NULL THEN
+        :NEW.id := T_POKEMON_SEQUENCE_ACADEMY06.NEXTVAL;
+    END IF;
+END;
+/
+
+INSERT INTO T_POKEMON_ACADEMY06 (
+    NOME_POKEMON, 
+    ORDEM, 
+    PESO, 
+    TIPO
+) 
+VALUES (
+    'Pikachu',
+    25,
+    6.00,
+    'Elétrico'
+);
+
+
+SELECT * FROM T_POKEMON_ACADEMY06
+
+
+CREATE TABLE T_POKEMON_ABILIDADE_ACADEMY06(
+    ID_HABILIDADE NUMBER PRIMARY KEY,
+    ID_POKEMON INTEGER NOT NULL,
+    HABILIDADE VARCHAR2(50),
+    DATA_CRIACAO TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT FK_POKEMON_ABILIDADE_ACADEMY06 FOREIGN KEY (ID_POKEMON) REFERENCES T_POKEMON_ACADEMY06 (ID)
+) 
+
+CREATE SEQUENCE T_POKEMON_SEQUENCE_ACADEMY062
+START WITH 1
+INCREMENT BY 1
+CACHE 20;
+
+CREATE OR REPLACE TRIGGER T_POKEMON_TRIGGER_ACADEMY062
+BEFORE INSERT ON T_POKEMON_ABILIDADE_ACADEMY06
+FOR EACH ROW
+BEGIN
+    IF :NEW.ID_HABILIDADE  IS NULL THEN
+        :NEW.ID_HABILIDADE := T_POKEMON_SEQUENCE_ACADEMY062.NEXTVAL;
+    END IF;
+END;
+/
+
+CREATE OR REPLACE PROCEDURE P_POKEMON_ACADEMY06 (pokemon_name IN VARCHAR2) IS
+    V_RESPONSE    CLOB;
+    V_URL         VARCHAR2(4000);
+    V_POKE_NAME   VARCHAR2(100);
+    V_POKE_WEIGHT NUMBER;
+    V_POKE_ID     NUMBER;
+    V_EXISTS      NUMBER;
+BEGIN
+    -- URL da API com o nome do Pokémon
+    V_URL := 'https://pokeapi.co/api/v2/pokemon/' || LOWER(pokemon_name);
+
+    -- Configurar cabeçalhos da requisição
+    APEX_WEB_SERVICE.G_REQUEST_HEADERS.DELETE();
+    APEX_WEB_SERVICE.G_REQUEST_HEADERS(1).NAME := 'Content-Type';
+    APEX_WEB_SERVICE.G_REQUEST_HEADERS(1).VALUE := 'application/json';
+
+    -- Fazer a requisição GET
+    BEGIN
+        V_RESPONSE := APEX_WEB_SERVICE.MAKE_REST_REQUEST(
+                        P_URL         => V_URL,
+                        P_HTTP_METHOD => 'GET');
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Erro ao buscar dados da API: ' || SQLERRM);
+    END;
+
+    -- Obter os dados principais do Pokémon
+    BEGIN
+        SELECT POKE_ID, POKE_NAME, POKE_WEIGHT
+        INTO   V_POKE_ID, V_POKE_NAME, V_POKE_WEIGHT
+        FROM   JSON_TABLE(
+            V_RESPONSE FORMAT JSON,
+            '$'
+            COLUMNS (
+                POKE_ID NUMBER PATH '$.id',
+                POKE_NAME VARCHAR2(100) PATH '$.name',
+                POKE_WEIGHT NUMBER PATH '$.weight'
+            )
+        );
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Erro ao extrair os dados do JSON.');
+    END;
+
+    -- Verificar se o Pokémon já existe
+    SELECT COUNT(*)
+    INTO   V_EXISTS
+    FROM   T_POKEMON_ACADEMY06
+    WHERE  ID = V_POKE_ID;
+
+    IF V_EXISTS > 0 THEN
+        -- Atualizar Pokémon existente
+        UPDATE T_POKEMON_ACADEMY06
+        SET    NOME_POKEMON = V_POKE_NAME,
+               PESO = V_POKE_WEIGHT,
+               DATA_ATUALIZACAO = SYSTIMESTAMP
+        WHERE  ID = V_POKE_ID;
+
+        -- Remover habilidades existentes
+        DELETE FROM T_POKEMON_ABILIDADE_ACADEMY06
+        WHERE  ID_POKEMON = V_POKE_ID;
+    ELSE
+        -- Inserir novo Pokémon
+        INSERT INTO T_POKEMON_ACADEMY06 (
+            ID, NOME_POKEMON, PESO, DATA_CRIACAO
+        )
+        VALUES (
+            V_POKE_ID, V_POKE_NAME, V_POKE_WEIGHT, SYSTIMESTAMP
+        );
+    END IF;
+
+    -- Inserir as habilidades do Pokémon
+    BEGIN
+        FOR CUR IN (
+            SELECT POKE_ABILITY
+            FROM JSON_TABLE(
+                V_RESPONSE FORMAT JSON,
+                '$.abilities[*]'
+                COLUMNS (
+                    POKE_ABILITY VARCHAR2(100) PATH '$.ability.name'
+                )
+            )
+        ) LOOP
+            INSERT INTO T_POKEMON_ABILIDADE_ACADEMY06 (
+                ID_HABILIDADE, ID_POKEMON, HABILIDADE, DATA_CRIACAO
+            )
+            VALUES (
+                ,V_POKE_ID, CUR.POKE_ABILITY, SYSTIMESTAMP
+            );
+        END LOOP;
+    EXCEPTION
+        WHEN OTHERS THEN
+            RAISE_APPLICATION_ERROR(-20003, 'Erro ao inserir habilidades: ' || SQLERRM);
+    END;
+
+    -- Confirmar alterações
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        RAISE_APPLICATION_ERROR(-20004, 'Erro na procedure: ' || SQLERRM);
+END P_POKEMON_ACADEMY06;
+/
+
+
+BEGIN
+    P_POKEMON_ACADEMY06('charizard');
+END;
+
+SELECT * FROM T_POKEMON_ACADEMY06
+
+SELECT * FROM T_POKEMON_ABILIDADE_ACADEMY06
