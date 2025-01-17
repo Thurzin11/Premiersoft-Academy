@@ -1,5 +1,5 @@
+import NextAuthSessionProvider from "@/providers/sessionProvider";
 import "./globals.css";
-import Header from "./header";
 
 export default function RootLayout({
   children,
@@ -9,8 +9,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <Header /> */}
-        {children}
+        <NextAuthSessionProvider>
+          {children}
+        </NextAuthSessionProvider>
       </body>
     </html>
   );

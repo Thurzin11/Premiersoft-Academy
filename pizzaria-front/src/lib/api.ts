@@ -1,10 +1,15 @@
 import axios from "axios";
 import { IUserCreate } from "../../models/IUserCreate";
 
-export async function getPizzas(): Promise<IPizza[]> {
+export async function getPizzas(token: string): Promise<IPizza[]> {
   try {
     const response = await axios.get<IPizza[]>(
-      `${process.env.NEXT_PUBLIC_HOST}/pizza`
+      `${process.env.NEXT_PUBLIC_HOST}/pizza`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -111,8 +116,11 @@ export async function getCategoriesByName(
 
 export async function createUser(user: IUserCreate) {
   try {
-    console.log(user);    
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/user`,user);
+    console.log(user);
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_HOST}/user`,
+      user
+    );
     return response.data;
   } catch (error) {
     console.error(error);

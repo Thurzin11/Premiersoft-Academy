@@ -5,9 +5,8 @@ import { UserRole } from "../../../models/UserRole";
 import { IUserCreate } from "../../../models/IUserCreate";
 import { useRouter } from "next/navigation";
 
-
 const Page = () => {
-    const navegar = useRouter();
+  const navegar = useRouter();
   const [newUser, setNewUser] = useState<IUserCreate>({
     name: "",
     email: "",
@@ -17,9 +16,8 @@ const Page = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // console.log(newUser);
     await createUser(newUser);
-    navegar.push('/login');
+    navegar.push("/login");
   };
 
   return (
@@ -42,6 +40,7 @@ const Page = () => {
                 setNewUser({ ...newUser, name: e.target.value });
               }}
               className="p-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Digite seu nome"
             />
           </div>
 
@@ -60,6 +59,7 @@ const Page = () => {
                 setNewUser({ ...newUser, email: e.target.value });
               }}
               className="p-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Digite seu email"
             />
           </div>
 
@@ -78,7 +78,13 @@ const Page = () => {
                 setNewUser({ ...newUser, password: e.target.value });
               }}
               className="p-1 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Digite sua senha"
             />
+            <p className="text-sm text-center mt-4 text-gray-600">
+              <a href="/login" className="text-blue-500 hover:underline">
+                Já tem uma conta?
+              </a>
+            </p>
           </div>
 
           <button
