@@ -3,7 +3,7 @@ import { CreatePizzaDto } from './dto/create-pizza.dto';
 import { UpdatePizzaDto } from './dto/update-pizza.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Pizza } from './entities/pizza.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class PizzaService {
@@ -17,6 +17,13 @@ export class PizzaService {
       where: {
         price,
       },
+    });
+  }
+
+  async getByName(name: string): Promise<Pizza[]> {
+    const nameRight = `%${name}%`;
+    return await this.pizzaRepository.find({
+      where: { name: ILike(nameRight) },
     });
   }
 
@@ -36,10 +43,10 @@ export class PizzaService {
   async findByCategory(categoryId: string): Promise<Pizza[]> {
     return await this.pizzaRepository
       .createQueryBuilder('p')
-      .innerJoin('pizza_category', 'pc', 'pc.pizza_id = p.id') // Join the pivot table
-      .innerJoin('category', 'c', 'pc.category_id = c.id') // Join the category table
-      .where('c.id = :categoryId', { categoryId }) // Add the WHERE condition
-      .select('p') // Select only fields from the pizza table
+      .innerJoin('pizza_category', 'pc', 'pc.pizza_id = p.id')
+      .innerJoin('category', 'c', 'pc.category_id = c.id')
+      .where('c.id = :categoryId', { categoryId })
+      .select('p')
       .getMany();
   }
 

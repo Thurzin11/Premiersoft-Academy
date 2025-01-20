@@ -26,7 +26,6 @@ import { Public } from '../auth/constants/constants';
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
-  @Public()
   @Post()
   @ApiOperation({ summary: 'Cria uma nova categoria' })
   @ApiResponse({
@@ -45,7 +44,6 @@ export class CategoryController {
     return res.status(201).send(categoryCreated);
   }
 
-  @Public()
   @Get()
   @ApiOperation({ summary: 'Lista todas as categorias' })
   @ApiResponse({
@@ -57,7 +55,6 @@ export class CategoryController {
     return await this.categoryService.findAll();
   }
 
-  @Public()
   @Get('name/:name')
   @ApiOperation({ summary: 'Encontra categoria por nome' })
   async findByName(@Param('name') name: string): Promise<Category[]> {
