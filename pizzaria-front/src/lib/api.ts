@@ -18,10 +18,15 @@ export async function getPizzas(token: string): Promise<IPizza[]> {
   }
 }
 
-export async function getPizzaById(id: string): Promise<IPizza> {
+export async function getPizzaById(id: string, token: string): Promise<IPizza> {
   try {
     const response = await axios.get<IPizza>(
-      `${process.env.NEXT_PUBLIC_HOST}/pizza/${id}`
+      `${process.env.NEXT_PUBLIC_HOST}/pizza/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
     return response.data;
   } catch (error) {
@@ -144,6 +149,23 @@ export async function getCategoriesByName(
     console.log(nameSearch);
     const response = await axios.get<ICategory[]>(
       `${process.env.NEXT_PUBLIC_HOST}/category/name/${nameSearch}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export async function getPizzasByName(name: string, token: string) {
+  try {
+    const response = await axios.get<IPizza[]>(
+      `${process.env.NEXT_PUBLIC_HOST}/pizza/name/${name}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

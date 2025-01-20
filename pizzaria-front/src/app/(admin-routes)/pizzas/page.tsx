@@ -14,7 +14,7 @@ const page: React.FC = async () => {
   const pizzas: IPizza[] = await getPizzas(session?.access_token);
   const category = {} as ICategory;
 
-  return <ListPizzas pizzas={pizzas} category={category} />;
+  return <ListPizzas pizza={pizzas} category={category} token={session.access_token} />;
 };
 
 export default page;

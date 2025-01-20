@@ -1,19 +1,21 @@
 "use client";
 
 import { createCategory } from "@/lib/api";
+import { redirect } from "next/navigation";
 import React, { useState } from "react";
 
 interface propsCreateCategory {
   token: string;
 }
 
-const CadastroCategoria = ( token: propsCreateCategory) => {
+const CadastroCategoria = (token: propsCreateCategory) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     createCategory({ name, description }, token.token);
+    redirect("/categories");
   };
 
   return (

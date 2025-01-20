@@ -40,9 +40,9 @@ const ListCategorias = ({ token }: props) => {
         <div className="w-[30%] flex justify-between">
           <Link
             href={"categories/new"}
-            className={`bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 h-[50%] ${showSearch ? "hidden" : ""}`}
+            className={`bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 h-[50%] w-[70%] text-center ${showSearch ? "hidden" : ""}`}
           >
-            Criar nova categoria
+            Criar nova Categoria
           </Link>
           <input
             onChange={(e) => setNomeSearch(e.target.value)}
