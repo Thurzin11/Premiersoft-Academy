@@ -63,7 +63,7 @@ const ListCategorias = ({ token }: props) => {
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((category) => (
+        {(categories.length > 0 ? categories.map((category) => (
           <Link
             href={"/categories/" + category.id}
             key={category.id}
@@ -94,7 +94,7 @@ const ListCategorias = ({ token }: props) => {
               )} */}
             </div>
           </Link>
-        ))}
+        )): <p>Nenhuma categoria encontrada</p>)}
       </div>
     </div>
   );

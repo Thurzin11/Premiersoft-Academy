@@ -1,9 +1,9 @@
 "use client";
 import { createUser } from "@/lib/api";
 import React, { useState } from "react";
-import { UserRole } from "../../../models/UserRole";
-import { IUserCreate } from "../../../models/IUserCreate";
 import { useRouter } from "next/navigation";
+import { UserRole } from "../../../../models/UserRole";
+import { IUserCreate } from "../../../../models/IUserCreate";
 
 const Page = () => {
   const navegar = useRouter();
@@ -17,7 +17,7 @@ const Page = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await createUser(newUser);
-    navegar.push("/login");
+    navegar.push("/");
   };
 
   return (

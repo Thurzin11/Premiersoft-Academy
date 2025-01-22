@@ -24,8 +24,8 @@ export async function getPizzaById(id: string, token: string): Promise<IPizza> {
       `${process.env.NEXT_PUBLIC_HOST}/pizza/${id}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     return response.data;
@@ -135,6 +135,36 @@ export async function createPizza(
         },
       }
     );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function updatePizza(
+  idPizza: string,
+  pizza: {
+    name: string;
+    description: string;
+    price: number;
+    isAvailable: boolean;
+    categories: ICategory[];
+  },
+  token: string
+) {
+  try {
+    console.log(pizza);
+    const response = await axios.patch(
+      `${process.env.NEXT_PUBLIC_HOST}/pizza/${idPizza}`,
+      pizza,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log(response);
+
     return response.data;
   } catch (error) {
     console.error(error);

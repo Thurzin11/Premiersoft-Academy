@@ -1,23 +1,45 @@
 "use client";
 import Pill from "@/components/Pill";
-import { createPizza, getCategories, getCategoriesByName } from "@/lib/api";
+import {
+  createPizza,
+  getCategories,
+  getCategoriesByName,
+  updatePizza,
+} from "@/lib/api";
 import React, { use, useEffect, useState } from "react";
 
 interface propsCreate {
   token: string;
+  pizza?: IPizza;
 }
 
 const CadastroPizza = (props: propsCreate) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState<number>(0);
   const [isAvailable, setIsAvailable] = useState(false);
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [searchCategory, setSearchCategory] = useState("");
   const [suggestionsCategory, setSuggestionsCategory] = useState<ICategory[]>(
     []
   );
+  const [isUpdate, setIsUpdate] = useState(false);
   const [categoriesSelect, setCategoriesSelect] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    const checkPizza = async () => {
+      if (props.pizza) {
+        console.log(props.pizza);
+        setName(props.pizza.name);
+        setDescription(props.pizza.description);
+        setPrice(props.pizza.price);
+        setIsAvailable(props.pizza.isAvailable);
+        setCategoriesSelect(props.pizza.categories);
+        setIsUpdate(true);
+      }
+    };
+    checkPizza();
+  }, [props.pizza]);
 
   const handleSelectCategory = (category: ICategory) => {
     setSearchCategory("");
@@ -25,39 +47,43 @@ const CadastroPizza = (props: propsCreate) => {
       suggestionsCategory.filter((c) => c.id !== category.id)
     );
     setCategoriesSelect([...categoriesSelect, category]);
-    console.log(categoriesSelect);
   };
 
   useEffect(() => {
     updateSuggestionsCategories(searchCategory);
-  }, [searchCategory]);
+  }, [searchCategory, categoriesSelect]);
 
   const correctCategory = (wrongCategory: ICategory[]) => {
-    const rightCategory = wrongCategory.filter(
+    const rightCategory: ICategory[] = wrongCategory.filter(
       (categories) =>
         !categoriesSelect.some((category) => category.id === categories.id)
     );
-    return rightCategory;
+    setSuggestionsCategory(rightCategory);
   };
 
   const updateSuggestionsCategories = async (nameCategory: string) => {
     if (nameCategory) {
       const response = await getCategoriesByName(nameCategory, props.token);
-      const suggestCategoryRight: ICategory[] = correctCategory(response);
-      console.log("All categories by name ", suggestCategoryRight);
-      console.log("Categories selected ", categoriesSelect);
-      setSuggestionsCategory(suggestCategoryRight);
+      correctCategory(response);
     } else {
       const response = await getCategories(props.token);
-      const suggestCategoryRight = correctCategory(response);
-      console.log("All categories ", suggestCategoryRight);
-      console.log("Categories selected ", categoriesSelect);
-      setSuggestionsCategory(suggestCategoryRight);
+      correctCategory(response);
     }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isUpdate && props.pizza) {
+      const pizzaUpdate = {
+        name,
+        description,
+        price,
+        isAvailable,
+        categories: categoriesSelect,
+      }
+      await updatePizza(props.pizza.id,pizzaUpdate, props.token);
+      return;
+    }
     const pizza = {
       name,
       description,
@@ -76,7 +102,7 @@ const CadastroPizza = (props: propsCreate) => {
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold text-gray-800 text-start">
-        Cadastro de Pizza
+        {isUpdate ? "Atualizacao" : "Cadastro"} de Pizza
       </h1>
       <form className="flex flex-col gap-4 mt-4" onSubmit={handleSubmit}>
         <label htmlFor="name" className="text-gray-800 font-semibold">
